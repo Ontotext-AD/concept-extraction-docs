@@ -1,0 +1,16 @@
+releases:
+  "v1_0_0":
+    "Getting Started":
+      - "quick-start"
+      - "installation"
+      - "ces_components"
+    "HowTo's":
+      - "annotating_content"
+    "Miscellaneous":
+      - "troubleshooting"
+      - "faq"
+      - "known-issues"
+  "v1_1_1":
+    "Getting Started":
+      - "quick-start"
+      - "installation"
