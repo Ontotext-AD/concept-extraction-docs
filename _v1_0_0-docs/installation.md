@@ -14,7 +14,7 @@ permalink: v1_0_0-docs/installation/
 ## Standard (and easy) setup
 
 1. Get a Semantic Pipeline and unzip it to a directory. For the purpose of this guide, we'll assume you have your pipeline contents unpacked in `/home/user/pipeline`.
-2. Install a web application container. If you already have one - great, if not - we use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi)
+2. Install a web application container. If you already have one - great, if not - we use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi).
 3. You will need to set a few JVM params, in Tomcat this is done from `/apache-tomcat/bin/setenv.sh`. See the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">worker configuration page</a>.
 4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war).
 5. You can now start your webapp container.
@@ -26,7 +26,7 @@ Due to <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitati
 
 ## High-availability setup
 
-The high-availability setup architecture includes several components, communicating through RESTful calls. Each component has its own role in the environment. Here is a list with brief explanation of each module:
+The high-availability setup architecture includes several components, communicating through RESTful calls. Each component has its own role in the environment. Here is a list with brief explanations for each module:
 
 * *GraphDB with EUF plugin* -- the GraphDB module maintains a semantic database, containing RDF data used within the system. Its EUF plugin (EUF stands for _Entity Update Feed_) is responsible for providing the outer world with notifications about every entity (concept) within the database that has been modified in any way (added, removed, edited).
 * *Concept Extraction API Coordinator* -- the Coordinator module accepts annotation requests and dispatches them towards a group of Concept Extraction Workers (see below). The Coordinator communicates with the semantic database in order to track for changes leading to updates in every Worker's Dynamic Gazetteer.
@@ -38,16 +38,16 @@ Information about installing and using the GraphDB semantic database can be foun
 
 In order to install the Entity Update Feed plugin, check the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">CES Components</a>.
 
-<div class="warning-badge">
+<div class="note-badge">
 OPTIONAL: insert a single random statement having <code>rdfs:label</code> as predicate in order to activate the EUF plugin.
 </div>
 
 ### Setting up a Coordinator
 
-We will be using *Apache Tomcat* as a web application container for this example.
+We use Apache Tomcat as a web application container for this example.
 
 1. Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.
-2. Add the coordinator-specific parameters to the Tomcat setup -- use the `{{<tomcat-home>/bin/setenv.sh}}` file; example:
+2. Add the coordinator-specific parameters to the Tomcat setup -- use the `<tomcat-home>/bin/setenv.sh` file. Example:
 <pre><code>
 coordinator setenv.sh
 # !/bin/bash
@@ -74,44 +74,53 @@ For more information about all Coordinator configuration parameters, check <a hr
 
 ### Setting up a Worker node
 
-We will be using *Apache Tomcat* as a web application container for this example.
+We use Apache Tomcat as a web application container for this example.
 
-1. Download the [CES Worker web application|http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war] from our Nexus instance
-2. Add the worker-specific parameters to the Tomcat setup -- use the {{<tomcat-home>/bin/setenv.sh}} file; example:
-{code:language=bash|title=worker setenv.sh}
-3. !/bin/bash
+1. Download the [CES Worker web application|http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war] from our Nexus instance.
+2. Add the worker-specific parameters to the Tomcat setup -- use the `<tomcat-home>/bin/setenv.sh` file. Example:
+<pre><code>
+worker setenv.sh
+# !/bin/bash
 
-4. garbage collection and compiler
+# garbage collection and compiler
 export J_OPTS="-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx4g"
 
-5. worker options -- path to pipeline, size of pipeline pool
+# worker options -- path to pipeline, size of pipeline pool
 export W_OPTS="-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipeline/application.xgapp -Dpipeline-pool-max-size=2"
 
 export CATALINA_OPTS="$J_OPTS $W_OPTS"
-{code}
-6. Deploy the {{extractor-web.war}} in Tomcat's {{webapps}} directory
+</code></pre>
+6. Deploy the `extractor-web.war` in Tomcat's `webapps` directory.
 7. (Re-)start the Tomcat instance
 
-(!) More information about all Worker configuration parameters can be found [here|CES Components#Worker]
+<div class="info-badge">
+For more information about all Worker configuration parameters, check <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">CES Components</a>.
+</div>
 
 ### Adding a Worker node into the Coordinator
 
-(!) Assumptions:
+<div class="note-badge">
+Assumptions:
 
-* the *coordinator* instance is located at {{http://coordinator.url:7070/coordinator}}
-* the *worker* instance is located at {{http://worker.url:6060/worker}}
-* the *worker* instance has a pipeline pool with size 2
+<ul>
+<li>the <code>coordinator</code> instance is located at http://coordinator.url:7070/coordinator.</li>
+<li>the <code>worker</code> instance is located at http://worker.url:6060/worker.</li>
+<li>the <code>worker</code> instance has a pipeline pool with size 2.</li>
+</ul>
+</div>
 
-Using a REST client, execute the following request to the *coordinator* instance ({{http://coordinator.url:7070}}):
+Using a REST client, execute the following request to the coordinator instance (`http://coordinator.url:7070`):
 
-{code}
+<pre><code>
 POST /coordinator/workers
 Content-type: application/json
 
 [{"capacity":2, "url":"http://worker.url:6060/worker"}]
-{code}
+</code></pre>
 
-* {{capacity}} is the number of pipeline instances in the worker pool.
-* {{url}} is the location of the worker instance.
+* <code>capacity</code> is the number of pipeline instances in the worker pool.
+* <code>url</code> is the location of the worker instance.
 
-(!) Instead of a REST client, one could use the Coordinator' Swagger Documentation endpoint, located at {{http://coordinator.url:7070/coordinator/apidocs}} and the specific *POST* or *PUT* requests.
+<div class="note-badge">
+Instead of a REST client, one could use the Coordinator' Swagger Documentation endpoint, located at `http://coordinator.url:7070/coordinator/apidocs` and the specific <code>POST</code> or <code>PUT</code> requests.
+</div>

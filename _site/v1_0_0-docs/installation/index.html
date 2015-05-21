@@ -251,7 +251,7 @@
 
 <ol>
   <li>Get a Semantic Pipeline and unzip it to a directory. For the purpose of this guide, we’ll assume you have your pipeline contents unpacked in <code>/home/user/pipeline</code>.</li>
-  <li>Install a web application container. If you already have one - great, if not - we use <a href="http://tomcat.apache.org/download-70.cgi">Apache Tomcat 7</a></li>
+  <li>Install a web application container. If you already have one - great, if not - we use <a href="http://tomcat.apache.org/download-70.cgi">Apache Tomcat 7</a>.</li>
   <li>You will need to set a few JVM params, in Tomcat this is done from <code>/apache-tomcat/bin/setenv.sh</code>. See the <a href="/concept-extraction-docs/v1_0_0-docs/ces_components">worker configuration page</a>.</li>
   <li>Download <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war">extractor-web.war</a>.</li>
   <li>You can now start your webapp container.</li>
@@ -264,7 +264,7 @@ Due to <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitati
 
 <h2 id="high-availability-setup">High-availability setup</h2>
 
-<p>The high-availability setup architecture includes several components, communicating through RESTful calls. Each component has its own role in the environment. Here is a list with brief explanation of each module:</p>
+<p>The high-availability setup architecture includes several components, communicating through RESTful calls. Each component has its own role in the environment. Here is a list with brief explanations for each module:</p>
 
 <ul>
   <li><em>GraphDB with EUF plugin</em> – the GraphDB module maintains a semantic database, containing RDF data used within the system. Its EUF plugin (EUF stands for <em>Entity Update Feed</em>) is responsible for providing the outer world with notifications about every entity (concept) within the database that has been modified in any way (added, removed, edited).</li>
@@ -278,17 +278,17 @@ Due to <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitati
 
 <p>In order to install the Entity Update Feed plugin, check the <a href="/concept-extraction-docs/v1_0_0-docs/ces_components">CES Components</a>.</p>
 
-<div class="warning-badge">
+<div class="note-badge">
 OPTIONAL: insert a single random statement having <code>rdfs:label</code> as predicate in order to activate the EUF plugin.
 </div>
 
 <h3 id="setting-up-a-coordinator">Setting up a Coordinator</h3>
 
-<p>We will be using <em>Apache Tomcat</em> as a web application container for this example.</p>
+<p>We use Apache Tomcat as a web application container for this example.</p>
 
 <ol>
   <li>Download the <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war">Coordinator web application</a> from our Nexus instance.</li>
-  <li>Add the coordinator-specific parameters to the Tomcat setup – use the `` file; example:</li>
+  <li>Add the coordinator-specific parameters to the Tomcat setup – use the <code>&lt;tomcat-home&gt;/bin/setenv.sh</code> file. Example:</li>
 </ol>
 <pre><code>
 coordinator setenv.sh
@@ -317,7 +317,7 @@ For more information about all Coordinator configuration parameters, check <a hr
 
 <h3 id="setting-up-a-worker-node">Setting up a Worker node</h3>
 
-<p>We will be using <em>Apache Tomcat</em> as a web application container for this example.</p>
+<p>We use Apache Tomcat as a web application container for this example.</p>
 
 <ol>
   <li>
@@ -325,63 +325,63 @@ For more information about all Coordinator configuration parameters, check <a hr
       <tbody>
         <tr>
           <td>Download the [CES Worker web application</td>
-          <td>http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war] from our Nexus instance</td>
+          <td>http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war] from our Nexus instance.</td>
         </tr>
       </tbody>
     </table>
   </li>
-  <li>Add the worker-specific parameters to the Tomcat setup – use the  file; example:
-{code:language=bash|title=worker setenv.sh}</li>
-  <li>
-    <p>!/bin/bash</p>
-  </li>
-  <li>
-    <p>garbage collection and compiler
-export J_OPTS=”-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx4g”</p>
-  </li>
-  <li>worker options – path to pipeline, size of pipeline pool
-export W_OPTS=”-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipeline/application.xgapp -Dpipeline-pool-max-size=2”</li>
+  <li>Add the worker-specific parameters to the Tomcat setup – use the <code>&lt;tomcat-home&gt;/bin/setenv.sh</code> file. Example:</li>
+</ol>
+<pre><code>
+worker setenv.sh
+# !/bin/bash
+
+# garbage collection and compiler
+export J_OPTS="-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx4g"
+
+# worker options -- path to pipeline, size of pipeline pool
+export W_OPTS="-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipeline/application.xgapp -Dpipeline-pool-max-size=2"
+
+export CATALINA_OPTS="$J_OPTS $W_OPTS"
+</code></pre>
+<ol>
+  <li>Deploy the <code>extractor-web.war</code> in Tomcat’s <code>webapps</code> directory.</li>
+  <li>(Re-)start the Tomcat instance</li>
 </ol>
 
-<p>export CATALINA_OPTS=”$J_OPTS $W_OPTS”
-{code}
-6. Deploy the  in Tomcat’s  directory
-7. (Re-)start the Tomcat instance</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>(!) More information about all Worker configuration parameters can be found [here</td>
-      <td>CES Components#Worker]</td>
-    </tr>
-  </tbody>
-</table>
+<div class="info-badge">
+For more information about all Worker configuration parameters, check <a href="/concept-extraction-docs/v1_0_0-docs/ces_components">CES Components</a>.
+</div>
 
 <h3 id="adding-a-worker-node-into-the-coordinator">Adding a Worker node into the Coordinator</h3>
 
-<p>(!) Assumptions:</p>
+<div class="note-badge">
+Assumptions:
 
 <ul>
-  <li>the <em>coordinator</em> instance is located at </li>
-  <li>the <em>worker</em> instance is located at </li>
-  <li>the <em>worker</em> instance has a pipeline pool with size 2</li>
+<li>the <code>coordinator</code> instance is located at http://coordinator.url:7070/coordinator.</li>
+<li>the <code>worker</code> instance is located at http://worker.url:6060/worker.</li>
+<li>the <code>worker</code> instance has a pipeline pool with size 2.</li>
 </ul>
+</div>
 
-<p>Using a REST client, execute the following request to the <em>coordinator</em> instance ():</p>
+<p>Using a REST client, execute the following request to the coordinator instance (<code>http://coordinator.url:7070</code>):</p>
 
-<p>{code}
+<pre><code>
 POST /coordinator/workers
-Content-type: application/json</p>
+Content-type: application/json
 
-<p>[{“capacity”:2, “url”:”http://worker.url:6060/worker”}]
-{code}</p>
+[{"capacity":2, "url":"http://worker.url:6060/worker"}]
+</code></pre>
 
 <ul>
-  <li>is the number of pipeline instances in the worker pool.</li>
-  <li>is the location of the worker instance.</li>
+  <li><code>capacity</code> is the number of pipeline instances in the worker pool.</li>
+  <li><code>url</code> is the location of the worker instance.</li>
 </ul>
 
-<p>(!) Instead of a REST client, one could use the Coordinator’ Swagger Documentation endpoint, located at  and the specific <em>POST</em> or <em>PUT</em> requests.</p>
+<div class="note-badge">
+Instead of a REST client, one could use the Coordinator' Swagger Documentation endpoint, located at `http://coordinator.url:7070/coordinator/apidocs` and the specific <code>POST</code> or <code>PUT</code> requests.
+</div>
 
 									</div><!-- entry-content -->
 								</div><!-- bd -->
