@@ -4,7 +4,7 @@ title: Dynamic Gazetteer
 prev_section:
 next_section:
 category: HowTo's
-permalink: v1_0_0-docs/dynamic_updates/
+permalink: v1_0_0-docs/dynamic_gazetteer/
 ---
 
 ## Dynamic Gazetteer
