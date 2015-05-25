@@ -22,7 +22,7 @@ This page provides information about all the components required to build a resi
 #### GATE
 
 * `-Dgate.app.location` (REQUIRED) - full path to the `*.xgapp` file to load, including the filename and extension. It should start with `file:/`, otherwise it will be interpreted as relative to the application context.
-* `-Dpipeline-pool-max-size` (OPTIONAL, default = 1) - the maximum number of Gate pooled applications. In other words, the number of simultaneous annotations this worker will support.
+* `-Dpipeline-pool-max-size` (OPTIONAL, default = 1) - the maximum number of Gate pooled applications. In other words, the number of simultaneous annotations this worker will support. You want to avoid CPU context switching, so if you have a dedicated box for a worker, the rule of thumb is to set this parameter to the number of CPU cores there are on the box.
 
 #### Recommended JVM settings
 
