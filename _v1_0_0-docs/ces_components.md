@@ -9,103 +9,129 @@ permalink: v1_0_0-docs/ces_components/
 
 ## Overview
 
-This page provides information about all the components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only need to extract named entities from text with a static dictionary and don't care about high availability, you can do it with a single worker.
+This section provides information about all components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only want to extract named entities from text with a static dictionary and are not interested in high availability, you can do it with a single worker.
 
 ## Worker
 
+<a name="worker-configuration"></a>
 ### Configuration
 
 #### General
 
-* `-Dworker.name` (OPTIONAL) - an optional sub-directory within worker persistence directory, points to `~/.ces-worker` by default.
+* `-Dworker.name` (optional) - a sub-directory in the worker persistence directory, points to `~/.ces-worker` by default.
 
 #### GATE
 
-* `-Dgate.app.location` (REQUIRED) - full path to the `*.xgapp` file to load, including the filename and extension. It should start with `file:/`, otherwise it will be interpreted as relative to the application context.
-* `-Dpipeline-pool-max-size` (OPTIONAL, default = 1) - the maximum number of Gate pooled applications. In other words, the number of simultaneous annotations this worker will support.
+* `-Dgate.app.location` (required) - a full path to the `*.xgapp` file to load, including the filename and extension. It should
+start with `file:/`, otherwise it is interpreted as relative to the application context.
+* `-Dpipeline-pool-max-size` (optional, default = 1) - the maximum number of GATE pooled applications. It shows
+the number of simultaneous annotations this worker supports.
 
 #### Recommended JVM settings
 
-* GC:`-XX:+UseConcMarkSweepGC` `-verbose:gc` `-verbose:sizes` `-Xloggc:/path/to/logs/gc.log`
-`-XX:+PrintGCDetails` `-XX:+PrintGCDateStamps` `-XX:+PrintTenuringDistribution`
-`-XX:+UseGCLogFileRotation` `-XX:NumberOfGCLogFiles=5` `-XX:GCLogFileSize=2M`;
-* Compiler: `-XX:+TieredCompilation`;
-* `-Xmx:` dependent on the pipeline in use, each pipeline package should state how much memory it requires.
+* GC:
+   * `-XX:+UseConcMarkSweepGC -verbose:gc-verbose:sizes`
+   * `-Xloggc:/path/to/logs/gc.log`
+   * `-XX:+PrintGCDetails`
+   * `-XX:+PrintGCDateStamps`
+   * `-XX:+PrintTenuringDistribution`
+   * `-XX:+UseGCLogFileRotation`
+   * `-XX:NumberOfGCLogFiles=5`
+   * `-XX:GCLogFileSize=2M`
+* Compiler:
+    `-XX:+TieredCompilation`
+* `-Xmx:` depends on the pipeline in use - each pipeline package should state how much memory it requires.
 
+<a name="coordinator"></a>
 ## Coordinator
 
+<a name="coordinator-configuration"></a>
 ### Configuration
 
 All timeouts are in milliseconds unless specified otherwise.
 
 #### General
 
-* `-Dcoordinator.name` (OPTIONAL) - the name of this coordinator. Used for suffix for the directory under home in which the coordinator persists its state.
-* `-Dcoordinator.stateDirectory` (OPTIONAL, default = `<home>/.coordinator`) - set the directory for Coordinator's state files.
-* `-Dcoordinator.baseUrl` (REQUIRED) - the base address of this coordinator. Needed to be able to give workers URLs that point back to the coordinator.
+* `-Dcoordinator.name` (optional) - the name of this Cordinator. It is used for the suffix of the directory under home in which
+the Coordinator persists its state.
+* `-Dcoordinator.stateDirectory` (optional, default = `<home>/.coordinator`) - sets the directory for the state files of the Coordinator;
+* `-Dcoordinator.baseUrl` (required) - the base address of this Coordinator. It gives the URLs  that point
+back to the Coordinator to the workers.
 
 #### GraphDB
 
-* `-Dcoordinator.sparql.endpoint` (REQUIRED) - the remote SPARQL endpoint URL, including repository. Usually in the form `http://<host>:<port>/graphdb/repositories/<repo_name>`.
-* `-Dcoordinator.sparql.connectionTimeout` (OPTIONAL, default = 10000) - establish connection to the SPARQL endpoint timeout.
-* `-Dcoordinator.sparql.socketTimeout` (OPTIONAL, default = 600000) - socket timeout for SPARQL queries.
+* `-Dcoordinator.sparql.endpoint` (required) - the remote SPARQL endpoint URL, including the repository. Usually in the form of
+http://<host>:<port>/graphdb/repositories/<repo_name>.
+* `-Dcoordinator.sparql.connectionTimeout` (optional, default = 10000) - establishes the connection to the SPARQL endpoint timeout;
+* `-Dcoordinator.sparql.socketTimeout` (optional, default = 600000) - the socket timeout for the SPARQL queries.
 
 #### Workers
 
-* `-Dcoordinator.worker.connectionTimeout` (OPTIONAL, default = 10000) - establishing connection to a worker timeout;
-* `-Dcoordinator.worker.socketTimeout` (OPTIONAL, default = 10000) - socket timeout for worker communication;
-* `-Dcoordinator.worker.retries` (OPTIONAL, default = 2);
-* `-Dcoordinator.worker.retryDelay` (OPTIONAL, default = 2000);
-* `-Dcoordinator.worker.retryDelayMult` (OPTIONAL, default = 2.0).
+* `-Dcoordinator.worker.connectionTimeout` (optional, default = 10000) - establishes the connection to a worker timeout;
+* `-Dcoordinator.worker.socketTimeout` (optional, default = 10000) - the socket timeout for the worker communication;
+* `-Dcoordinator.worker.retries` (optional, default = 2);
+* `-Dcoordinator.worker.retryDelay` (optional, default = 2000);
+* `-Dcoordinator.worker.retryDelayMult` (optional, default = 2.0).
 
 #### Updates (dictionaries)
 
-* `-Dcoordinator.updates.checkDelay` (OPTIONAL, default = 10000) - initial delay before the first check for updates;
-* `-Dcoordinator.updates.checkRate` (OPTIONAL, default = 600000) - interval between checks for updates;
-* `-Dcoordinator.updates.maxWorkersToVerifyv` (OPTIONAL, default = 2) - a change will first be verified on a single workers before being propagated to all workers. This specified the maximum number of workers to attempt to change before giving up.
-* `-Dcoordinator.updates.verificationTimeout` (OPTIONAL, default = 1800000) - the maximum time to wait for update verification.
+* `-Dcoordinator.updates.checkDelay` (optional, default = 10000) - the initial delay before the first check for updates;
+* `-Dcoordinator.updates.checkRate` (optional, default = 600000) - the interval between the checks for updates;
+* `-Dcoordinator.updates.maxWorkersToVerify` (optional, default = 2) - a change is first verified on a single worker
+before it is propagated to all workers. This specifies the maximum number of workers that it attempts to change before giving up;
+* `-Dcoordinator.updates.verificationTimeout` (optional, default = 1800000) - the maximum wait time for the update verification.
 
 #### Updates (models)
 
-* `-Dcoordinator.models.endpoint` (OPTIONAL) - training node base url. If not specified, worker models won't be updated.
-* `-Dcoordinator.models.schedule` (OPTIONAL, default = "0 0 2 * * ?") - a cron expression specifying when to check for updates. See [Spring's CronSequenceGenerator documentation](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html) for full syntax and explanation. The default value checks for models every day at 2am.
+* `-Dcoordinator.models.endpoint` (optional) - the training node base URL. If not specified, the worker models are not updated;
+* `-Dcoordinator.models.schedule` (optional, default = "0 0 2 * * ?") - a cron expression, specifying when to check for updates.
+See [Spring's CronSequenceGenerator documentation]([http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html])
+for the full syntax and explanation. The default value checks for models every day at 2am.
 
 #### Annotation
 
-* `-Dcoordinator.annotation.freeWorkerTimeout` (OPTIONAL, default = 30000) - the maximum time to wait for free worker to become available for annotation.
-* `-Dcoordinator.annotation.connectionTimeout` (OPTIONAL, default = 10000) - establish connection to a worker for annotation timeout.
-* `-Dcoordinator.annotation.socketTimeout` (OPTIONAL, default = 60000) - socket timeout for annotation to a worker.
+* `-Dcoordinator.annotation.freeWorkerTimeout` (optional, default = 30000) - the maximum wait time for a free worker to
+become available for annotation;
+* `-Dcoordinator.annotation.connectionTimeout` (optional, default = 10000) - establishes the connection to a worker for the annotation timeout;
+* `-Dcoordinator.annotation.socketTimeout` (optional, default = 60000) - the socket timeout for annotation to a worker.
 
 #### Watchdog / heartbeat checker
 
-* `-Dcoordinator.watchdog.checkDelay` (OPTIONAL, default = 60000) - initial delay before the first heartbeat check;
-* `-Dcoordinator.watchdog.checkRate` (OPTIONAL, default = 60000) - interval between heartbeat checks.
+* `-Dcoordinator.watchdog.checkDelay` (optional, default = 60000) - the initial delay before the first heartbeat check;
+* `-Dcoordinator.watchdog.checkRate` (optional, default = 60000) - the interval between the heartbeat checks.
 
 #### Files
 
-All files relative to `~/.coordinator/\[$\{coordinator.name\}\]` , that is `~/.coordinator` if `coordinator.name` is unset and `~/.coordinator/<coordinator.name>/` if it is set.
+All files relative to `~/.coordinator/\[$\{coordinator.name\}\]/`, which is `~/.coordinator`, if `coordinator.name` is unset, and
+`~/.coordinator/<coordinator.name>/`, if it is set.
 
-* `workers.json` - persisted workers list and configuration;
+* `workers.json` - the persisted workers list and configuration;
 * `sparql-update-history.json` - the update history for `SparqlUpdatesManager`;
-* `models.json` - latest known models for `ModelUpdatesManager`.
+* `models.json` - the latest known models for `ModelUpdatesManager`.
 
 #### JVM settings
 
-* GC: `-XX:+UseConcMarkSweepGC` `-verbose:gc` `-verbose:sizes` `-Xloggc:/path/to/logs/gc.log`
-`-XX:+PrintGCDetails` `-XX:+PrintGCDateStamps` `-XX:+PrintTenuringDistribution`
-`-XX:+UseGCLogFileRotation` `-XX:NumberOfGCLogFiles=5` `-XX:GCLogFileSize=2M`;
+* GC:
+  * `-XX:+UseConcMarkSweepGC \-verbose:gc \-verbose:sizes \-Xloggc:/path/to/logs/gc.log`;
+  * `-XX:+PrintGCDetails \-XX:+PrintGCDateStamps`;  
+  * `-XX:+PrintTenuringDistribution`;
+  * `-XX:+UseGCLogFileRotation`;
+  * `-XX:NumberOfGCLogFiles=5`;
+  * `-XX:GCLogFileSize=2M`;
 * Compiler: `-XX:+TieredCompilation`;
-* `-Xmx:` depends on the pipeline, each pipeline should come with memory requirements.
+* `-Xmx:` depends on the pipeline in use - each pipeline should come with memory requirements.
 
-
+<a name="GraphDBandEUFplugin"></a>
 ## GraphDB and EUF plug-in
 
-This is the semantic database you are going to need to enable the dynamic dictionary updates functionality. In case you don't already have GraphDB, go get it [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). Official [6.0 documentation](http://graphdb.ontotext.com/display/GraphDB6/Home).
+This is the semantic database required to enable the dynamic dictionary updates functionality. If you do not have GraphDB, you can get the latest version [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). For information how to install, etc., see its [ documentation](https://confluence.ontotext.com/display/GraphDB6/Home).
 
-EUF stands for *Entity Updates Feed*. This plug-in publishes entity update feeds which are consumed by the Coordinator.
+EUF stands for 'Entity Updates Feed'. This plug-in publishes entity update feeds that are used by the Coordinator.
 
+<a name="EUF-configuration"></a>
 ### Configuration
 
 To install the EUF plug-in in GraphDB:
-1. Provide the following Java parameter to GraphDB on startup `-Dregister-external-plugins=/your/plugins/home`
-2. Unpack the [EUF plug-in](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/graphdb-euf-plugin/1.0.0/graphdb-euf-plugin-1.0.0.zip) in your plugins home (prior to starting GraphDB).
+1. Provide the following Java parameter to GraphDB on startup
+```-Dregister-external-plugins=/your/plugins/home```.
+2. Unpack the [EUF plug-in zip. file](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/graphdb-euf-plugin/1.0.0/graphdb-euf-plugin-1.0.0.zip) in your plugins home prior to starting GraphDB.
