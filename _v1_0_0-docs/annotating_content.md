@@ -62,7 +62,7 @@ It is also advisable to specify `Accept` header with the desired output mime typ
 If `Accept` header is not specified, the simple mentions JSON format is returned (`application/vnd.ontotext.ces+json`).
 </div>
 
-* Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`).
+* Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`);
 * the "simple mentions" JSON format (`application/vnd.ontotext.ces` or `application/vnd.ontotext.ces+json`), described in more details below.
 
 ## Typical mention features
