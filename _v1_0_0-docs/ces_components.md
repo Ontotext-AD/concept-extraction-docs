@@ -117,5 +117,6 @@ EUF stands for 'Entity Updates Feed'. This plug-in publishes entity update feeds
 ### Configuration
 
 To install the EUF plug-in in GraphDB:
+
 1. Provide the following Java parameter to GraphDB on startup `-Dregister-external-plugins=/your/plugins/home`.
 2. Unpack the [EUF plug-in zip. file](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/graphdb-euf-plugin/1.0.0/graphdb-euf-plugin-1.0.0.zip) in your plugins home prior to starting GraphDB.
