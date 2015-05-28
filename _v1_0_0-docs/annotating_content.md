@@ -7,119 +7,117 @@ category: HowTo's
 permalink: v1_0_0-docs/annotating_content/
 ---
 
-## Annotate
+<a name="annotate-content"></a>
+## Introduction
 
-### Introduction
+This section describes how to annotate documents with CES (Concept Extraction Service).
 
-This section describes how to annotate documents with CES.
+*Annotating* a document is the process of adding a set of metadata about words or phrases in an unstructured text.
 
-*Annotating* a document is the process of adding a set of meta data about words or phrases in an unstructured text.
-
-A *mention* is a slice of text with attached meta data features. Mentions always have:
-
-* *type* - the type of annotation,  usually _Person_, _Organization_ or _Location_, but other types can be returned;
+A *mention* is a piece of text with attached metadata features. Mentions always have:
+* *type* - the type of the annotation, usually _Person_, _Organization_, or _Location_, but other types can be returned as well;
 * *startOffset*, *endOffset* - 0-based offsets in the original text;
-* *features* map containing any number of properties/features depending on the mention origin.
+* *features* map - contains any number of properties/features depending on the origin of the mention.
 
-A mention is usually (but not necessarily) associated with a *concept*. A concept is a real-world entity that we recognized, a mention is a reference to that concept.
+A *mention* is usually (but not necessarily) associated with a *concept*. A concept is a real-world entity that we recognize while a mention is a reference to this concept.
 
-For example, annotating the text "Hello London" will yield a mention similar to the one below. The only mention has offsets within the original text and is associated with the concept `http://dbpedia.org/resource/London`.
-<pre><code>
+For example, the text `Hello London`, will yield a mention like the one below. The only mention has offsets within the original text and is associated with the concept http://dbpedia.org/resource/London
+
+```
 {
-	"name": "London",
-	"startOffset": 9,
-	"endOffset": 15,
-	"type": "Location",
-	"features": {
-		"inst": "http://dbpedia.org/resource/London",
-		"class": "http://www.ontotext.com/proton/protontop#Location",
-		"string": "London",
-		"id": 392
-	}
+  "name": "London",
+  "startOffset": 9,
+  "endOffset": 15,
+  "type": "Location",
+  "features": {
+      "inst": "http://dbpedia.org/resource/London",
+      "class": "http://www.ontotext.com/proton/protontop#Location",
+      "string": "London",
+      "id": 392
+    }
 }
-</code></pre>
+```
 
-### Notation
+## Notation
 
-All URLs in this document are of the form `http://worker-base/endpoint` where `http://worker-base` is the `host:port/context` of a deployed CES worker and `endpoint` is the specific worker call. For example, if you worker is deployed at `http://192.168.0.1/extractor-web` and this guide mentions `http://worker-base/extract` then the URL to query will be `http://192.168.0.1/extractor-web/extract`.
+All URLs in this document are of the form http://worker-base/endpoint where http://worker-base is the `host:port/context` of a deployed CES worker and `endpoint` is the specific worker call. For example, if your worker is deployed at http://192.168.0.1/extractor-web and this guide mentions http://worker-base/extract, then the URL to query will be http://192.168.0.1/extractor-web/extract.
 
 
-### Annotation request
+## Annotation request
 
-Annotation requests go to `http://worker-base/extract`. There are two ways to invoke annotation:
+Annotation requests go to http://worker-base/extract. There are two ways to invoke an annotation:
+* *GET* request with a *url* parameter (e.g. http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel);
+* *POST* request with a meaningful *Content-type* header and a body of the specified type.
+The content type of the input document, whether specified by a URL or a request header, should be in one of the [supported formats](#inputFormats).
 
-* `GET` request with a `url` parameter (e.g. http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel);
-* `POST` request with meaningful `Content-type` header and body of the specified type.
-The content type of the input document, whether specified by a URL or a request header, should be one of the supported input formats.
+It is also advisable to specify *Accept* header with the desired output mime type. The default will usually be `application/vnd.ontotext.ces+json`, see [output formats](#outputFormats) for more.
 
-It's also advisable to specify `Accept` header with the desired output mime type. The default is usually `application/vnd.ontotext.ces+json`, see output formats for more.
-
-### Supported input formats
+<a name="inputFormats"></a>
+## Supported input formats
 
 * the standard web text formats such as _text/xml_, _text/html_, _text/plain_;
-* Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`);
+* Ontotext's generic document schema in either JSON (_application/vnd.ontotext.ces.document+json_) or XML (_application/vnd.ontotext.ces.document+xml_);
 * formats supported by [Apache Tika](http://tika.apache.org/1.5/formats.html) should also work fine most of the time.
 
-### Supported output formats
+<a name="outputFormats"></a>
+## Supported output formats
 
-<div class="note-badge">
-If <code>Accept</code> header is not specified, the simple mentions JSON format is returned (<code>application/vnd.ontotext.ces+json</code>).
-</div>
+:exclamation: Tip: If *Accept* header is not specified, the simple mentions JSON format is returned (_application/vnd.ontotext.ces+json_).
 
-* Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`);
-* the "simple mentions" JSON format (`application/vnd.ontotext.ces_` or `application/vnd.ontotext.ces+json`). Described in more details in Simple mentions format.
+* Ontotext's generic document schema in either JSON (_application/vnd.ontotext.ces.document+json_) or XML (_application/vnd.ontotext.ces.document+xml_);
+* the "simple mentions" JSON format (_application/vnd.ontotext.ces_ or _application/vnd.ontotext.ces+json_). [See for more details below|](#simpleMentions]).
 
-### Typical mention features
+## Typical mention features
 
-Mention features can vary wildly depending on the subsystem that generated the mention. Most mentions however will have:
+Mention features can vary widely, depending on the sub-system that generates the mention. However most mentions have:
+* *inst* - a URI for the concept of this mention. This can "point" to a concept database (freebase, dbpedia, etc.) or can be generated by machine learning sub-systems;
+* *class* - generally related to the *type* of the mention, the *class* is a URI of the class name in the concept database;
+* *string* - а piece of text associated with this mention, the text between *startOffset* and *endOffset*;
+* *id* - the numeric ID of the mention, which is unique in the document.
 
-* `inst` - a URI for this mention's concept. This might "point out" to a concept database (freebase, dbpedia, etc.) or be generated by machine learning subsystems.
-* `class` - generally related to the `type` of the mention, the `class` is a URI of class name within the concept database;
-* `string` - the slice of text associated with this mention, it is the text between `startOffset` and `endOffset`;
-* `id` - numeric id of the mention, unique within the document.
+Other returned features may include *confidence* (how sure the annotator feels about this mention), *ambiguityRank*, etc.
+Other features depend on the database and type, for example locations such as _London_ can have a *featClass*, *featCode*, *countryCode*, etc., giving more information about the concept
 
-Other returned features may include `confidence` (how sure the annotator feels about this mention), `ambiguityRank`, etc.
-Other features are database and type dependent, for example locations such as _London_ can have a `featClass`, `featCode`, `countryCode`, etc., giving more information about the concept.
+## Examples
 
-### Examples
-
-#### Posting plain text
+### Posting plain text
 
 Request:
-<pre><code>
+```
 POST /extractor-web/extract
 Content-length: 14
 Content-type: text/plain
 Accept: application/vnd.ontotext.ces+json
 
 Hello London!
-</code></pre>
+```
 
 Response:
-<pre><code>
+```
 HTTP/1.1 200 OK
 Content-Type: application/vnd.ontotext.ces+json;charset=UTF-8
 
 {
-    "mentions": [{
-        "name": "London",
-        "startOffset": 6,
-        "endOffset": 12,
-        "type": "Location",
-        "features": {
-            "inst": "http://dbpedia.org/resource/London",
-            "class": "http://www.ontotext.com/proton/protontop#Location",
-            "string": "London",
-            "id": 392
-        }
+  "mentions": [{
+      "name": "London",
+      "startOffset": 6,
+      "endOffset": 12,
+      "type": "Location",
+      "features": {
+          "inst": "http://dbpedia.org/resource/London",
+          "class": "http://www.ontotext.com/proton/protontop#Location",
+          "string": "London",
+          "id": 392
+      }
     }]
 }
-</code></pre>
+```
 
-#### Posting and receiving generic document
+### Posting and receiving generic document
 
 Request:
-<pre><code>
+
+```
 POST /extractor-web/extract
 Content-type: application/vnd.ontotext.ces.document+xml
 Accept: application/vnd.ontotext.ces.document+json
@@ -127,133 +125,137 @@ Accept: application/vnd.ontotext.ces.document+json
 <?xml version="1.0" encoding="utf-8"?>
 <tns:document xmlns:tns="http://www.ontotext.com/DocumentSchema" xmlns="http://www.w3.org/1999/xhtml" id="222-222">
     <tns:document-parts>
-        <tns:document-part id="1" part="BODY">
-            <tns:content>Hello, London!</tns:content>
-        </tns:document-part>
+      <tns:document-part id="1" part="BODY">
+        <tns:content>Hello, London!</tns:content>
+      </tns:document-part>
     </tns:document-parts>
 </tns:document>
-</code></pre>
+
+```
+
 Response:
-<pre><code>
+```
 HTTP/1.1 200 OK
 Content-Type: application/vnd.ontotext.ces.document+json;charset=UTF-8
 
 {
-    "id": "222-222",
-    "feature-set": [],
-    "document-parts": {
-        "feature-set": [{
-            "name": {
-                "type": "XS_STRING",
-                "name": "encoding"
-            },
-            "value": {
-                "type": "XS_STRING",
-                "lang": null,
-                "value": "UTF-8"
-            }
-        }],
+  "id": "222-222",
+  "feature-set": [],
+  "document-parts": {
+      "feature-set": [{
+        "name": {
+            "type": "XS_STRING",
+            "name": "encoding"
+          },
+          "value": {
+            "type": "XS_STRING",
+            "lang": null,
+            "value": "UTF-8"
+          }
+      }],
         "document-part": [{
-            "id": "1",
-            "part": "BODY",
-            "content": {
-                "text": "Hello, London!",
-                "node": [{
-                    "id": "0",
-                    "offset": 0
-                }, {
-                    "id": "7",
-                    "offset": 7
-                }, {
-                    "id": "13",
-                    "offset": 13
-                }, {
-                    "id": "14",
-                    "offset": 14
-                }]
-            },
-            "feature-set": []
-        }]
-    },
-    "annotation-sets": [{
-        "name": "",
-        "ref": null,
-        "annotation": []
-    }, {
-        "name": "Final",
-        "ref": null,
-        "annotation": [{
-            "id": "51",
-            "startnode": "7",
-            "endnode": "13",
-            "type": "Location",
-            "status": "Suggested",
-            "generated": false,
-            "feature-set": [{
-                "name": {
-                    "type": "XS_STRING",
-                    "name": "inst"
-                },
-                "value": {
-                    "type": "XS_STRING",
-                    "lang": null,
-                    "value": "http://dbpedia.org/resource/London"
-                }
+          "id": "1",
+          "part": "BODY",
+          "content": {
+            "text": "Hello, London!",
+            "node": [{
+                "id": "0",
+                "offset": 0
             }, {
-                "name": {
-                    "type": "XS_STRING",
-                    "name": "class"
-                },
-                "value": {
-                    "type": "XS_STRING",
-                    "lang": null,
-                    "value": "http://www.ontotext.com/proton/protontop#Location"
-                }
+                "id": "7",
+                "offset": 7
             }, {
-                "name": {
-                    "type": "XS_STRING",
-                    "name": "string"
-                },
-                "value": {
-                    "type": "XS_STRING",
-                    "lang": null,
-                    "value": "London"
-                }
+                "id": "13",
+                "offset": 13
             }, {
-                "name": {
-                    "type": "XS_STRING",
-                    "name": "id"
-                },
-                "value": {
-                    "type": "XS_INTEGER",
-                    "lang": null,
-                    "value": "392"
-                }
+                "id": "14",
+                "offset": 14
             }]
-        }]
+        },
+          "feature-set": []
     }]
-}
-</code></pre>
-
-### Simple mentions format
-
-#### JSON
-<pre><code>
-{
-    "mentions": [{
-        "name": "London", // the name of the mention, usually the string between startOffset and endOffset
-        "startOffset": 6, // start offset of the mention
-        "endOffset": 12, // end offset of the mention
-        "type": "Location", // the mention type
-        "features": {
-            "inst": "http://dbpedia.org/resource/London", // the instance id (URI) of the concept associated with this mention
-            "class": "http://www.ontotext.com/proton/protontop#Location", // the class of the mentioned concept within the knowledge base
-            "string": "London", // the sting between startOffset and endOffset
-            "id": 392 // a unique id within the document
-            // ... other features
-        }
+  },
+  "annotation-sets": [{
+      "name": "",
+      "ref": null,
+      "annotation": []
+  }, {
+      "name": "Final",
+      "ref": null,
+      "annotation": [{
+      "id": "51",
+      "startnode": "7",
+      "endnode": "13",
+      "type": "Location",
+      "status": "Suggested",
+      "generated": false,
+      "feature-set": [{
+          "name": {
+              "type": "XS_STRING",
+              "name": "inst"
+          },
+          "value": {
+              "type": "XS_STRING",
+              "lang": null,
+              "value": "http://dbpedia.org/resource/London"
+          }
     }, {
-        // ... more annotations
-    }]
+        "name": {
+            "type": "XS_STRING",
+            "name": "class"
+         },
+        "value": {
+            "type": "XS_STRING",
+            "lang": null,
+            "value": "http://www.ontotext.com/proton/protontop#Location"
+        }
+     }, {
+         "name": {
+            "type": "XS_STRING",
+            "name": "string"
+        },
+        "value": {
+            "type": "XS_STRING",
+            "lang": null,
+            "value": "London"
+        }
+     }, {
+         "name": {  
+            "type": "XS_STRING",
+            "name": "id"
+         },
+         "value": {
+            "type": "XS_INTEGER",
+            "lang": null,
+            "value": "392"
+          }
+        }]
+      }]
+  }]
 }
-</code></pre>
+```
+
+<a name="simpleMentions"></a>
+## Simple mentions format
+
+### JSON
+
+```
+{
+                                              "mentions": [{
+                                                "name": "London", // the name of the mention, usually the string between startOffset and endOffset
+                                                "startOffset": 6, // start offset of the mention
+                                                "endOffset": 12, // end offset of the mention
+                                                "type": "Location", // the mention type
+                                                "features": {
+                                                  "inst": "http://dbpedia.org/resource/London", // the instance id (URI) of the concept associated with this mention
+                                                  "class": "http://www.ontotext.com/proton/protontop#Location", // the class of the mentioned concept within the knowledge base
+                                                  "string": "London", // the sting between startOffset and endOffset
+                                                  "id": 392 // a unique id within the document
+                                                  // ... other features
+                                                }
+                                                }, {
+                                                  // ... more annotations
+                                                  }]
+                                                  }
+                                                  ```
