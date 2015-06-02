@@ -26,67 +26,46 @@ If workers in the same annotation cluster have different queries, the coordinato
 
 _# TODO: general notes from dictionary_reload?_
 
-#### _GET /dictionaries/status_
+<abbr title="Returns whether the worker queries in the cluster are in sync.">GET /dictionaries/status</abbr>
 
-Returns whether the worker queries in the cluster are in sync.
+- *Query params*: none;
+- *Response*: a JSON object with two members:
+  * `sync` - boolean, true, if all workers have the same queries, otherwise - false;
+  * `forcedQueries` - the queries, if any, set through one of the `POST /dictionaries/queries` calls.
+- *Status code*: 200 on success.
 
-**Query params**: none
+<abbr title="Returns the queries, if any, set on the coordinator as cluster queries.">GET /dictionaries/queries</abbr>
 
-**Response**: a JSON object with two members:
-* **sync** - boolean, true, if all workers have the same queries, otherwise - false
-* **forcedQueries** - the queries, if any, set through one of the *POST /dictionaries/queries* calls
+* __Query params__: none;
+* *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call (i.e. a key in the map is a pipeline resource names, the value is the queries for that resource);
+* *Status code*: 200 on success.
 
-**Status code**: 200 on success
+> `POST /dictionaries/queries`
 
-#### _GET /dictionaries/queries_
+<div class="info-badge">
+Sets the cluster queries. The specified queries will be set immediately on all active workers, attempt to set the queries on currently inactive workers will be made when they become available. Resources that do not exist on a worker will be ignored by that worker. If setting the queries on a worker fails, it won't be reattempted.</div>
 
-Returns the queries, if any, set on the coordinator as cluster queries.
+* *Query params*: none;
+* *Request body*: JSON map where the keys are pipeline resource names, the values are queries for the respective resource name.
+* *Response*: response will be empty;
+* *Status code*: 200 on success.
 
-**Query params**: none
+> `POST /dictionaries/queries/from`
 
-**Response**: a JSON map mirroring what was set by the *POST /dictionaries/queries* call (i.e. a key in the map is a pipeline resource names,
-the value is the queries for that resource)
+<div class="info-badge">
+Sets a worker queries as the cluster queries. Behaves as the `POST /dictionaries/queries`, except this calls takes worker URL and sets its queries as the cluster ones, instead of accepting queries directly in the body.</div>
 
-**Status code**: 200 on success
-
-#### _POST /dictionaries/queries_
-
-Sets the cluster queries. The specified queries will be set immediately on all active workers, attempt to set the queries on currently
-inactive workers will be made when they become available. Resources that do not exist on a worker will be ignored by that worker.
-If setting the queries on a worker fails, it won't be reattempted.
-
-**Query params**: none
-
-**Request body**: JSON map where the keys are pipeline resource names, the values are queries for the respective resource name.
-
-**Response**: response will be empty
-
-**Status code**: 200 on success
-
-#### _POST /dictionaries/queries/from_
-
-Sets a worker queries as the cluster queries. Behaves as the _POST /dictionaries/queries_, except this calls takes worker URL and
-sets its queries as the cluster ones, instead of accepting queries directly in the body
-
-**Query params**:
-
-* **worker** - a worker's full URL
-
-**Response**: response will be empty
-
-**Status code**:
-
-* 200 on success
-* 400 if the worker does not exist
+* *Query params*: `worker` - a worker's full URL
+* *Response*: response will be empty
+* *Status code*:
+  * 200 on success;
+  * 400 if the worker does not exist.
 
 
-#### _DELETE /dictionaries/queries_
+> `DELETE /dictionaries/queries`
 
-Removes the queries set by _POST /dictionaries/queries_. Workers that haven't had their queries set after the last
-_POST /dictionaries/queries_ will keep their old queries.
+<div class="info-badge">Removes the queries set by `POST /dictionaries/queries`. Workers that haven't had their queries set after the last `POST /dictionaries/queries` will keep their old queries.</div>
 
-**Query params**: none
-
-**Response**: response will be empty
-
-**Status code**: 200 on success
+* *Query params*: none;
+* *Response*: response will be empty;
+* *Status code*: 200 on success.
