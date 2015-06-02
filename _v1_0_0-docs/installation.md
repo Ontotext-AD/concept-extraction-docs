@@ -15,22 +15,22 @@ permalink: v1_0_0-docs/installation/
 
 1. Get a Semantic Pipeline and unzip its content to a directory (for the purpose of this guide - `/home/user/pipeline`).
 2. Install a web application container. If you do not have one, you can use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi).
-3. You will need to set a few JVM parameters. In Tomcat this is done from `/apache-tomcat/bin/setenv.sh`. See the [worker configuration page](Components#worker-configuration).
+3. You will need to set a few JVM parameters. In Tomcat, this is done from `/apache-tomcat/bin/setenv.sh`. See the [worker configuration page](Components#worker-configuration).
 4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war).
 5. Now you can start your webapp container.
 6. Deploy the war you have just downloaded. In Tomcat, you simply need to move it to its `/webapps` sub-directory where it will be picked up.
 7. Now go to http://localhost:8080/extractor-web/apidocs for the live documentation.
 
-:exclamation: **Note:** Due to the [Swagger](https://helloreverb.com/developers/swagger) limitations, the most important endpoint, namely extract, cannot have a live documentation. Therefore it is explained [here](/content-annotation#annotate-content).
+:exclamation: **Note:** Due to the [Swagger](https://helloreverb.com/developers/swagger) limitations, the most important endpoint, namely extract, cannot have a live documentation. Therefore, it is explained [here](/content-annotation#annotate-content).
 
 
 ## High-availability setup
 
-The high-availability setup architecture includes several components, which communicate through RESTful calls. Each component has its own role in the environment. The following is a list with brief explanations for each module:
+The high-availability setup architecture includes several components, which communicate through RESTful calls. Each component has its own role in the environment. The following is a list of brief explanations for each module:
 
-* GraphDB with EUF plug-in (Entity Update Feed plug-in) - the GraphDB module maintains a semantic database, which contains the RDF data used in the system. The EUF plug-in is responsible for providing notifications about every entity (concept) in the database that has been modified (added, removed, or edited).
-* Concept Extraction API Coordinator - the coordinator module accepts annotation requests and dispatches them to a group of Concept Extraction Workers (see below). The Coordinator communicates with the semantic database in order to track changes leading to updates in every worker's dynamic gazetteer.
-* Concept Extraction API Worker - a worker module evaluates the annotation requests. It maintains a pool of GATE pipeline instances used for text analysis and concept extraction.
+* GraphDB with EUF (Entity Update Feed) plug-in - the GraphDB module maintains a semantic database, which contains the RDF data used in the system. The EUF plug-in is responsible for providing notifications about every entity (concept) in the database that has been modified (added, removed, or edited).
+* Concept Extraction API Coordinator - the Coordinator module accepts annotation requests and dispatches them to a group of Concept Extraction Workers. It communicates with the semantic database in order to track changes leading to updates in every worker's dynamic gazetteer.
+* Concept Extraction API Worker - a Worker module evaluates the annotation requests. It maintains a pool of GATE pipeline instances, used for text analysis and concept extraction.
 
 ### Installing GraphDB and the EUF plugin
 
@@ -58,7 +58,7 @@ export GENERAL_OPTS="-Dcoordinator.name=master -Dcoordinator.stateDirectory=/pat
 # sparql endpoint options -- location
 export ENDPOINT_OPTS="-Dcoordinator.sparql.endpoint=http://sparql.endpoint.be:8080/graphdb/repositories/my-repo"
 
-# VM options -- heap size, etc
+# VM options -- heap size, etc.
 export JVM_OPTS="-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx1g"
 
 export CATALINA_OPTS="$GENERAL_OPTS $ENDPOINT_OPTS $JVM_OPTS"

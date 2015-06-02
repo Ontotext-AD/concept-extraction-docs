@@ -11,7 +11,7 @@ permalink: v1_0_0-docs/dictionary_queries/
 
 The gazetteer uses SPARQL endpoint, usually GraphDB, to retrieve entities. What exactly is retrieved is configured by setting a number of SPARQL queries for each gazetteer. The queries should be `SELECT` (as opposed to `CONSTRUCT`) and gazetteer queries should always have `concept`, `type` and `literal` bindings in that order:
 <pre><code>SELECT ?concept ?type ?literal { # ...</code></pre>
-Meta data queries need `concept` and `type`, any other bindings will be added to the meta data per entity. Both gazetteer and meta data can use multiple queries. In all API calls, however, a single string per worker is used in which individual queries are separated by `@@@` on a line of its own, like this:
+Meta data queries need `concept` and `type`. Any other bindings will be added to the meta data per entity. Both the gazetteer and the meta data can use multiple queries. In all API calls, however, a single string per worker is used in which individual queries are separated by `@@@` on a line of its own:
 <pre><code>
 SELECT ?concept ?type ?literal { ... }
 @@@
@@ -28,23 +28,23 @@ _# TODO: general notes from dictionary_reload?_
 
 #### _GET /dictionaries/status_
 
-Returns whether the worker queries in the cluster are in sync
+Returns whether the worker queries in the cluster are in sync.
 
 **Query params**: none
 
-**Response**: JSON object with two members:
-* **sync** - boolean, true if all workers have the same queries, false otherwise
+**Response**: a JSON object with two members:
+* **sync** - boolean, true, if all workers have the same queries, otherwise - false
 * **forcedQueries** - the queries, if any, set through one of the *POST /dictionaries/queries* calls
 
 **Status code**: 200 on success
 
 #### _GET /dictionaries/queries_
 
-Returns the queries, if any, set on the coordinator as cluster queries
+Returns the queries, if any, set on the coordinator as cluster queries.
 
 **Query params**: none
 
-**Response**: JSON map mirroring what was set by *POST /dictionaries/queries* call (i.e. a key in the map is a pipeline resource names,
+**Response**: a JSON map mirroring what was set by the *POST /dictionaries/queries* call (i.e. a key in the map is a pipeline resource names,
 the value is the queries for that resource)
 
 **Status code**: 200 on success

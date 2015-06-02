@@ -9,7 +9,7 @@ permalink: v1_0_0-docs/ces_components/
 
 ## Overview
 
-This section provides information about all components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only need to be able to extract named entities from text with a static dictionary and are not interested in high availability, you can do it with a single worker.
+This section provides information about all components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only need to extract named entities from text with a static dictionary and are not interested in high availability, you can do it with a single worker.
 
 ## Worker
 
@@ -17,11 +17,11 @@ This section provides information about all components required to build a resil
 
 #### General
 
-* `-Dworker.name` (optional) - a sub-directory in the worker persistence directory. By default it points to `~/.ces-worker`.
+* `-Dworker.name` (optional) - a sub-directory in the worker persistence directory. By default, it points to `~/.ces-worker`.
 
 #### GATE
 
-* `-Dgate.app.location` (required) - a full path to the `*.xgapp` file to load, including the filename and extension. It should start with `file:/`, otherwise it is interpreted as relative to the application context.
+* `-Dgate.app.location` (required) - a full path to the `*.xgapp` file to load, including the filename and extension. It has to start with `file:/`, otherwise it is interpreted as relative to the application context.
 * `-Dpipeline-pool-max-size` (optional, default = 1) - the maximum number of GATE pooled applications. It shows the number of simultaneous annotations this worker supports.
 
 #### Recommended JVM settings
@@ -37,13 +37,15 @@ This section provides information about all components required to build a resil
    * `-XX:GCLogFileSize=2M`
 * Compiler:
     `-XX:+TieredCompilation`
-* `-Xmx:` depends on the pipeline in use - each pipeline package should state how much memory it requires.
+* `-Xmx:` depends on the pipeline in use - each pipeline package has to state how much memory it requires.
 
 ## Coordinator
 
 ### Configuration
 
+<div class="note-badge">
 All timeouts are in milliseconds unless specified otherwise.
+</div>
 
 #### General
 
