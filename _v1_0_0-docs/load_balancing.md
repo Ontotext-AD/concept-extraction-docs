@@ -31,21 +31,23 @@ in use. Since coordinators do not communicate between themselves, one coordinato
 
 ### Load balancing under the hood
 
-The coordinator distributes annotation requests by maintaining a queue of free "annotation slots" for each worker. For example, let's say we add two workers `W1` with capacity 3 and `W2` with capacity 4 (these are on-the-coordinator capacities - actual workers' capacity does not matter to the load balancer). The load balancing queue will be similar to this, after the workers have been
-added
+The coordinator distributes annotation requests by maintaining a queue of free "annotation slots" for each worker. For example, let's say we add two workers `W1` with capacity 3 and `W2` with capacity 4 (these are on-the-coordinator capacities - actual workers' capacity does not matter to the load balancer). The load balancing queue will be similar to this, after the workers have been added.
+
 <pre><code>     +--+--+--+--+--+--+--+
 head |W2|W1|W2|W1|W2|W1|W2| tail
      +--+--+--+--+--+--+--+</code></pre>
+
 Each square represents a free annotation slot on the respective worker. When an annotation request arrives at the coordinator, it picks the annotation slot at the head, `W2` in this case, and forwards the request to it. After the worker finishes annotating, the slot is pushed back at the tail of the queue (assuming no other requests have arrived in the meantime):
+
 <pre><code>     +--+--+--+--+--+--+--+
 head |W1|W2|W1|W2|W1|W2|W2| tail
      +--+--+--+--+--+--+--+</code></pre>
+
 If the queue is empty when a request arrives, the coordinator waits for a while (as configured by
 `-Dcoordinator.annotation.freeWorkerTimeout` parameter) for a free slot to appear in the queue. In the case a worker does not become free during the specified timeout, `503 Service Unavailable` response is returned back to the client.
 
 ### Peak loads - fail-fast vs wait-and-see
 
 Since workers can block indefinitely, this parameter effectively controls whether a client's annotation job fails fast when there are no resources available or is eventually acted upon.
-
 
 When the number of simultaneous annotation requests is a lot greater than the sum of all worker capacities, the coordinator load balancing queues will be empty for long periods of time. Configuring small `freeWorkerTimeout` will cause a lot of the "extra" requests to fail and it is the client's responsibility to retry the request. Configuring large `freeWorkerTimeout` causes the extra requests to pile up on the coordinator, which will eventually distribute them when the load goes down. This, however, may lead to additional resources consumption (heap and thread count), which can eventually manifest in out of memory (OOM) exceptions or blocking due to exhausting the thread count limits (in extreme cases). Which behavior is more appropriate depends on the client's needs.
