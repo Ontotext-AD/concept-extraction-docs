@@ -20,7 +20,7 @@ A *mention* is a piece of text with attached metadata features, which is usually
 * `features` map - contains any number of properties/features depending on the origin of the mention;
 * concept - a resource (URI) that represents a real life entity, used for recognizing mentions in texts.
 
-For example, annotating the text "Hello London" will yield a mention such as the one below. It has a "startOffset" and "endOffset", and is associated with the concept http://dbpedia.org/resource/London.
+For example, annotating the text "Hello London" will yield a mention such as the one below. It has a `startOffset` and `endOffset`, and is associated with the concept `http://dbpedia.org/resource/London`.
 
 <pre><code>
 {
@@ -43,13 +43,13 @@ All URLs in this document are of the form `http://worker-base/endpoint`, where `
 
 ## Annotation request
 
-Annotation requests go to http://worker-base/extract. There are two ways to invoke an annotation:
+Annotation requests go to `http://worker-base/extract`. There are two ways to invoke an annotation:
 
 * `GET` request with a `url` parameter (e.g. http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel);
 * `POST` request with a meaningful `Content-type` header and a body of the specified type. The content type of the input document, whether specified by a URL or a request header, should be in one of the supported formats.
 
 <div class="note-badge">
-It is also advisable to specify `Accept` header with the desired output mime type. The default will usually be `application/vnd.ontotext.ces+json`. For more details, see Output formats.
+It is also advisable to specify <code>Accept</code> header with the desired output mime type. The default will usually be <code>application/vnd.ontotext.ces+json</code>. For more details, see Output formats.
 </div>
 
 ## Supported input formats
@@ -61,7 +61,7 @@ It is also advisable to specify `Accept` header with the desired output mime typ
 ## Supported output formats
 
 <div class="note-badge">
-If `Accept` header is not specified, the simple mentions JSON format is returned (`application/vnd.ontotext.ces+json`).
+If <code>Accept</code> header is not specified, the simple mentions JSON format is returned (<code>application/vnd.ontotext.ces+json</code>).
 </div>
 
 * Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`) format;
