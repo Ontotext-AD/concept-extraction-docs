@@ -9,31 +9,34 @@ permalink: v1_0_0-docs/installation/
 ## General prerequisites
 
 * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html);
-* Credentials to our Nexus publishing repositories.
+* Credentials to our Nexus publishing repositories;
+* GATE pipeline using the proprietary Ontotext Dynamic Gazetteer.
 
 ## Standard (and easy) setup
 
-1. Get a Semantic Pipeline and unzip its content to a directory (for the purpose of this guide - `/home/user/pipeline`).
+1. Unzip the content of your GATE pipeline in a directory (for the purpose of this guide - `/home/user/pipeline`).
 2. Install a web application container. If you do not have one, you can use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi).
 3. Set a few JVM parameters. In Tomcat, this is done from `/apache-tomcat/bin/setenv.sh`. See the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">worker configuration</a> section.
 4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war).
 5. Start your `webapp` container.
-6. Deploy the war you have just downloaded. In Tomcat, move it to its `/webapps` sub-directory where it will be picked up.
-7. Now go to http://localhost:8080/extractor-web/apidocs for the live documentation.
+6. Deploy the `war` you have just downloaded. In Tomcat, move it to its `/webapps` sub-directory where it will be picked up.
+7. Now go to [http://localhost:8080/extractor-web/apidocs](http://localhost:8080/extractor-web/apidocs) for the live documentation.
 
 <div class="note-badge">
 
-Due to the <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitations, the most important endpoint, namely extract, cannot have a live documentation. Therefore, it is explained <a href="{{ site.baseurl }}/v1_0_0-docs/annotating_content">here</a>.
+Due to the <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitations, the most important endpoint, namely <code>extract</code>, cannot have a live documentation. Therefore, it is explained <a href="{{ site.baseurl }}/v1_0_0-docs/annotating_content">here</a>.
 </div>
 
 
 ## High-availability setup
 
-The high-availability setup architecture includes several components, which communicate through RESTful calls. Each component has its own role in the environment. The following is a list of brief explanations for each module:
+The high-availability setup architecture includes several components, which communicate through RESTful calls. Each of them has its own role in the environment:
 
-* GraphDB with EUF (Entity Update Feed) plug-in - the GraphDB module maintains a semantic database, which contains the RDF data used in the system. The EUF plug-in is responsible for providing notifications about every entity (concept) in the database that has been modified (added, removed, or edited).
-* Concept Extraction API Coordinator - the Coordinator module accepts annotation requests and dispatches them to a group of Concept Extraction Workers. It communicates with the semantic database in order to track changes leading to updates in every worker's dynamic gazetteer.
-* Concept Extraction API Worker - a Worker module evaluates the annotation requests. It maintains a pool of GATE pipeline instances, used for text analysis and concept extraction.
+* _GraphDB with EUF (Entity Update Feed) plug-in_ - maintains a semantic database, which contains the RDF data used in the system. The EUF plug-in is responsible for providing notifications about every entity (concept) in the database that has been modified (added, removed, or edited).
+
+* _Concept Extraction API Coordinator_ - accepts annotation requests and dispatches them to a group of concept extraction workers. It communicates with the semantic database in order to track changes leading to updates in every worker's dynamic gazetteer.
+
+* _Concept Extraction API Worker_ - evaluates the annotation requests. It maintains a pool of GATE pipeline instances, used for text analysis and concept extraction.
 
 ### Installing GraphDB and the EUF plugin
 
@@ -75,7 +78,7 @@ export CATALINA_OPTS="$GENERAL_OPTS $ENDPOINT_OPTS $JVM_OPTS"
 4. (Re-)start the Tomcat instance.
 
 <div class="info-badge">
-For more information about all Coordinator configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
+For more information about all Coordinator's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
 </div>
 
 ### Setting up a Worker node
@@ -99,12 +102,12 @@ export W_OPTS="-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipelin
 export CATALINA_OPTS="$J_OPTS $W_OPTS"
 </code></pre>
 
-3.Deploy the `extractor-web.war` in Tomcat's `webapps` directory.
+3. Deploy the `extractor-web.war` in Tomcat's `webapps` directory.
 
-4.(Re-)start the Tomcat instance.
+4. (Re-)start the Tomcat instance.
 
 <div class="info-badge">
-For more information about all Worker configuration parameters. see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
+For more information about all Worker's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
 </div>
 
 ### Adding a Worker node to the Coordinator
@@ -132,5 +135,5 @@ Content-type: application/json
 * `url` is the location of the worker instance.
 
 <div class="note-badge">
-Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at http://coordinator.url:7070/coordinator/apidocs and the specific <code>POST</code> or <code>PUT</code> requests.
+Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at http://coordinator.url:7070/coordinator/apidocs and the specific <code>POST</code> and <code>PUT</code> requests.
 </div>
