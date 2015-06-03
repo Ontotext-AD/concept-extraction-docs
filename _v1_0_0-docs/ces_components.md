@@ -21,23 +21,23 @@ This section provides information about all components required to build a resil
 
 #### GATE
 
-* `-Dgate.app.location` (required) - a full path to the `*.xgapp` file to load, including the filename and extension. It has to start with `file:/`, otherwise it is interpreted as relative to the application context.
+* `-Dgate.app.location` (required) - a full path to the `*.xgapp` file that will be loaded, including the filename and extension. It has to start with `file:/`, otherwise it is interpreted as relative to the application context.
 * `-Dpipeline-pool-max-size` (optional, default = 1) - the maximum number of GATE pooled applications. It shows the number of simultaneous annotations this worker supports.
 
 #### Recommended JVM settings
 
 * GC:
-   * `-XX:+UseConcMarkSweepGC -verbose:gc-verbose:sizes`
-   * `-Xloggc:/path/to/logs/gc.log`
-   * `-XX:+PrintGCDetails`
-   * `-XX:+PrintGCDateStamps`
-   * `-XX:+PrintTenuringDistribution`
-   * `-XX:+UseGCLogFileRotation`
-   * `-XX:NumberOfGCLogFiles=5`
-   * `-XX:GCLogFileSize=2M`
+   * `-XX:+UseConcMarkSweepGC -verbose:gc-verbose:sizes`;
+   * `-Xloggc:/path/to/logs/gc.log`;
+   * `-XX:+PrintGCDetails`;
+   * `-XX:+PrintGCDateStamps`;
+   * `-XX:+PrintTenuringDistribution`;
+   * `-XX:+UseGCLogFileRotation`;
+   * `-XX:NumberOfGCLogFiles=5`;
+   * `-XX:GCLogFileSize=2M`.
 * Compiler:
-    `-XX:+TieredCompilation`
-* `-Xmx:` depends on the pipeline in use - each pipeline package has to state how much memory it requires.
+    `-XX:+TieredCompilation`.
+* `-Xmx:` depends on the pipeline in use. Each pipeline package has to state how much memory it requires.
 
 ## Coordinator
 
@@ -77,7 +77,7 @@ All timeouts are in milliseconds unless specified otherwise.
 #### Updates (models)
 
 * `-Dcoordinator.models.endpoint` (optional) - the training node base URL. If not specified, the worker models are not updated;
-* `-Dcoordinator.models.schedule` (optional, default = "0 0 2 * * ?") - a cron expression, specifying when to check for updates.  The default value checks for models every day at 2am. For the full syntax and explanation, see [Spring's CronSequenceGenerator documentation](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html).
+* `-Dcoordinator.models.schedule` (optional, default = "0 0 2 * * ?") - a cron expression, specifying when to check for updates.  The default value checks for models every day at 2 AM. For the full syntax and explanation, see [Spring's CronSequenceGenerator documentation](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html).
 
 #### Annotation
 
@@ -85,7 +85,7 @@ All timeouts are in milliseconds unless specified otherwise.
 * `-Dcoordinator.annotation.connectionTimeout` (optional, default = 10000) - establishes the connection to a worker for the annotation timeout;
 * `-Dcoordinator.annotation.socketTimeout` (optional, default = 60000) - the socket timeout for annotation to a worker.
 
-#### Watchdog / heartbeat checker
+#### Watchdog / Heartbeat checker
 
 * `-Dcoordinator.watchdog.checkDelay` (optional, default = 60000) - the initial delay before the first heartbeat check;
 * `-Dcoordinator.watchdog.checkRate` (optional, default = 60000) - the interval between the heartbeat checks.
@@ -106,19 +106,19 @@ All files relative to `~/.coordinator/\[$\{coordinator.name\}\]/`, which is `~/.
   * `-XX:+PrintTenuringDistribution`;
   * `-XX:+UseGCLogFileRotation`;
   * `-XX:NumberOfGCLogFiles=5`;
-  * `-XX:GCLogFileSize=2M`;
+  * `-XX:GCLogFileSize=2M`.
 * Compiler: `-XX:+TieredCompilation`;
-* `-Xmx:` depends on the pipeline in use - each pipeline should come with memory requirements.
+* `-Xmx:` depends on the pipeline in use. Each pipeline should come with memory requirements.
 
 ## GraphDB and EUF plug-in
 
-This is the semantic database required to enable the dynamic dictionary updates functionality. If you do not have GraphDB, you can get the latest version [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). For information how to install, etc., see its [ documentation](http://graphdb.ontotext.com/display/GraphDB6/Home).
+This is the semantic database required to enable the dynamic dictionary updates functionality. If you do not have GraphDB, you can get the latest version [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). For information how to install, etc., see its [ documentation](http://graphdb.ontotext.com/display/GraphDB62/Home).
 
-EUF stands for 'Entity Updates Feed'. This plug-in publishes entity update feeds that are used by the coordinator.
+The EUF plug-in publishes entity update feeds that are used by the coordinator.
 
 ### Configuration
 
 To install the EUF plug-in in GraphDB:
 
 1. Provide the following Java parameter to GraphDB on startup `-Dregister-external-plugins=/your/plugins/home`.
-2. Unpack the [EUF plug-in zip. file](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/graphdb-euf-plugin/1.0.0/graphdb-euf-plugin-1.0.0.zip) in your plugins home prior to starting GraphDB.
+2. Unpack the [EUF plug-in zip. file](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/graphdb-euf-plugin/1.0.0/graphdb-euf-plugin-1.0.0.zip) in your plug-ins HOME prior to starting GraphDB.
