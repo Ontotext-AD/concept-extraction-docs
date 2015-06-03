@@ -11,7 +11,7 @@ permalink: v1_0_0-docs/dynamic_gazetteer/
 
 ### Motivation
 
-Gazetteers are optimized to quickly look up words against very large set of labels, and take their data via a SPARQL endpoint, usually from GraphDB. Ideally, a gazetteer should reflect the changes in its source knowledge base, however loading entire large datasets from GraphDB can take a couple of hours. The gazetteer is be able to update incrementally, efficiently keeping up with the data.
+Gazetteers are optimized to quickly look up words against very large set of labels, and take their data via a SPARQL endpoint, usually from GraphDB. Ideally, a gazetteer should reflect the changes in its source knowledge base. However, loading entire large datasets from GraphDB can take a couple of hours. The gazetteer is able to update incrementally, efficiently keeping up with the data.
 
 ### Flow
 
