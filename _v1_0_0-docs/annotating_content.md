@@ -17,7 +17,7 @@ A *mention* is a piece of text with attached metadata features, which is usually
 
 * `type` - the type of the annotation, usually Person, Organization, or Location, but other types can be returned as well;
 * `startOffset`, `endOffset` - 0-based offsets in the original text;
-* `features` map - contains any number of properties/features depending on the origin of the mention;
+* `features map` - contains any number of properties/features depending on the origin of the mention;
 * concept - a resource (URI) that represents a real life entity, used for recognizing mentions in texts.
 
 For example, annotating the text "Hello London" will yield a mention such as the one below. It has a `startOffset` and `endOffset`, and is associated with the concept `http://dbpedia.org/resource/London`.
@@ -45,18 +45,18 @@ All URLs in this document are of the form `http://worker-base/endpoint`, where `
 
 Annotation requests go to `http://worker-base/extract`. There are two ways to invoke an annotation:
 
-* `GET` request with a `url` parameter (e.g. http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel);
-* `POST` request with a meaningful `Content-type` header and a body of the specified type. The content type of the input document, whether specified by a URL or a request header, should be in one of the supported formats.
+* `GET` request with a `url` parameter (e.g. `http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel`);
+* `POST` request with a meaningful `Content-type` header and a body of the specified type. The content type of the input document, whether specified by a URL or a request header, should be in one of the supported input formats.
 
 <div class="note-badge">
-It is also advisable to specify <code>Accept</code> header with the desired output mime type. The default will usually be <code>application/vnd.ontotext.ces+json</code>. For more details, see Output formats.
+It is also advisable to specify <code>Accept</code> header with the desired output mime type. Usually the default is <code>application/vnd.ontotext.ces+json</code>. For more details, see Supported output formats.
 </div>
 
 ## Supported input formats
 
 * the standard web text formats such as text/xml, text/html and text/plain;
 * Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`) format;
-* formats supported by [Apache Tika](http://tika.apache.org/1.5/formats.html) should also work.
+* formats supported by [Apache Tika](http://tika.apache.org/1.5/formats.html).
 
 ## Supported output formats
 
