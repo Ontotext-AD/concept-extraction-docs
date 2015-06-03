@@ -7,28 +7,24 @@ category: HowTo's
 permalink: v1_0_0-docs/dynamic_gazetteer/
 ---
 
-## Dynamic Gazetteer
-
-### Motivation
-
 Gazetteers are optimized to quickly look up words against very large set of labels, and take their data via a SPARQL endpoint, usually from GraphDB. Ideally, a gazetteer should reflect the changes in its source knowledge base. However, loading entire large datasets from GraphDB can take a couple of hours. The gazetteer is able to update incrementally, efficiently keeping up with the data.
 
-### Flow
+## Flow
 
 1. A client modifies some data in GraphDB - adds a new entity, deletes an entity, adds/removes/changes a label, etc.
 2. Entity update feed (EUF) plugin in GraphDB tracks transactions and records entities that have been modified in each transaction. A fingerprint (checksum) is calculated after each transaction and serves as an identifier of the database state at that point. The EUF plugin provides SPARQL hooks that allow querying for the current fingerprint and the list of modified entities between two arbitrary fingerprints.
 _do we need more details? special section for EUF with predicates and stuff?_
 3. The coordinator checks EUF current fingerprint periodically. When the fingerprint changes, the coordinators notify the workers to update to the new fingerprint.
 4. A worker receives a request to update the gazetteer with the new fingerprint. Then it executes the usual queries the gazetteer uses to retrieve its data, with an added clause, which EUF plugin interprets, to leave only the data modified after the current worker fingerprint and the new fingerprint passed by the coordinator. Finally, the worker updates its fingerprint and is up to date.
-<img src="{{ site.baseurl }}/img/Dictionary_Update_Sequence.png" alt="Dictionary_Update_Sequence" style="width:800px;height:550px">
+<img src="{{ site.baseurl }}/img/Dictionary_Update_Sequence.png" alt="Dictionary_Update_Sequence" style="width:800px;height:350px">
 
-### Update propagation
+## Update propagation
 
 When the coordinator sees an update to GraphDB (by observing new fingerprin) it first picks a single random worker and tries to update it to verify the update can be applied. If the worker fails, another one is picked at random to verify the update. This process is repeated until a worker suceeds or `-Dcoordinator.updates.maxWorkersToVerify` workers fail. If the workers fail, the update is discarded and is not attempted again. If the verification passes, all remaining workers are requested to update simultaneously.
 
-<img src="{{ site.baseurl }}/img/FT_Dictionary_Updates.png" alt="Dictionary Updates" style="width:800px;height:550px">
+<img src="{{ site.baseurl }}/img/FT_Dictionary_Updates.png" alt="Dictionary Updates" style="width:800px;height:350px">
 
-### Consistency
+## Consistency
 
 CES doesn't guarantee that all workers will be up to date with GraphDB at any given time. It does its best to keep the workers updated and consistent, without compromising availability:
 
@@ -37,7 +33,7 @@ CES doesn't guarantee that all workers will be up to date with GraphDB at any gi
 * workers that have missed too many incremental updates (as defined by `-Dcoordinator.updates.missedUpdatesBeforeReload`) will be fully reloaded - meaning they are temporarily disabled, their gazetteers completely wiped out and loaded entirely from GraphDB. The workers are then enabled for annotation again.
 * workers that failed a reload are disabled and taken out of the annotation cluster.
 
-### Worker update statuses
+## Worker update statuses
 
 The possible values for worker.updateStatus are as follows:
 
