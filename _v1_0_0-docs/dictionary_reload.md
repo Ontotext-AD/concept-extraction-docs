@@ -7,8 +7,6 @@ category: HowTo's
 permalink: v1_0_0-docs/dictionary_reload/
 ---
 
-## Dictionary reload
-
 Reloading a worker's dictionary means clearing it and executing a number of SPARQL queries to fill it afresh from a given SPARQL endpoint. It is potentially very long operation and should only be needed in few cases:
 
 * when a worker is brand new;
@@ -18,7 +16,7 @@ Reloading a worker's dictionary means clearing it and executing a number of SPAR
 
 Workers can not annotate while they are reloading. When the coordinator requests a worker reload or sees a worker is reloading, it will not send further annotation requests to that worker.
 
-### API reference
+## API reference
 
 Notes _(TODO: common for all API references - maybe move somewhere?)_
 
@@ -27,7 +25,7 @@ Notes _(TODO: common for all API references - maybe move somewhere?)_
 * query parameters for POST and PUT requests can be specified either in the URL or as `application/x-form-www-urlencoded`;
 * all requests that specifically expect request body accept only `application/json`.
 
-#### _POST /updates/force/reload_
+### _POST /updates/force/reload_
 
 Reloads a single worker. The coordinator will not immediately start reloading the worker if it is the last one enabled in the cluster
 to prevent loss of service. The worker will be immediately reloaded if it is the only one in the cluster or there are other workers
@@ -45,7 +43,7 @@ that are available (i.e. not down or reloading, etc)
 * 400 - if the worker was not found
 
 
-#### _POST /updates/force/reload/all_
+### _POST /updates/force/reload/all_
 
 Reloads all workers. Not all workers are reloaded simultaneously - the coordinator will try to keep one worker available for annotation (unless there's only one worker - in that case it is reloaded immediately).
 
