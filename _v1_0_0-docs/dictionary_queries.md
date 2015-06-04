@@ -28,7 +28,8 @@ If the workers of one annotation cluster have different queries, the coordinator
 
 _# TODO: general notes from dictionary_reload?_
 
-<abbr title="Returns whether the worker queries in the cluster are in sync.">GET /dictionaries/status</abbr>
+### `GET /dictionaries/status`
+<div class="info-badge">Returns whether the worker queries in the cluster are in sync.</div>
 
 - *Query params*: none;
 - *Response*: a JSON object with two members:
@@ -36,13 +37,14 @@ _# TODO: general notes from dictionary_reload?_
   * `forcedQueries` - the queries, if any, set through one of the `POST /dictionaries/queries` calls.
 - *Status code*: 200 on success.
 
-<abbr title="Returns the queries, if any, set on the coordinator as cluster queries.">GET /dictionaries/queries</abbr>
+### `GET /dictionaries/queries`
+<div class="info-badge">Returns the queries, if any, set on the coordinator as cluster queries.</div>
 
-* __Query params__: none;
+* *Query params*: none;
 * *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call (i.e. a key in the map is a pipeline resource names, the value is the queries for that resource);
 * *Status code*: 200 on success.
 
-> `POST /dictionaries/queries`
+### `POST /dictionaries/queries`
 
 <div class="info-badge">
 Sets the cluster queries. The specified queries will be set immediately on all active workers. On currently inactive workers the queries will be set when they become available. Resources that do not exist on a worker will be ignored by this worker. If setting the queries on a worker fails, it will not be reattempted.</div>
@@ -52,7 +54,7 @@ Sets the cluster queries. The specified queries will be set immediately on all a
 * *Response*: empty;
 * *Status code*: 200 on success.
 
-> `POST /dictionaries/queries/from`
+### `POST /dictionaries/queries/from`
 
 <div class="info-badge">
 Sets a worker queries as cluster ones. It behaves as <code>POST /dictionaries/queries</code> but instead of accepting queries directly in the body, it takes the worker URL and sets its queries as cluster ones.</div>
@@ -64,7 +66,7 @@ Sets a worker queries as cluster ones. It behaves as <code>POST /dictionaries/qu
   * 400, if the worker does not exist.
 
 
-> `DELETE /dictionaries/queries`
+### `DELETE /dictionaries/queries`
 
 <div class="info-badge">Removes the queries set by <code>POST /dictionaries/queries</code>. Workers whose queries are not set after the last <code>POST /dictionaries/queries</code>, will keep their old queries.</div>
 
