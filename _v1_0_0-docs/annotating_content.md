@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Annotating Content
+title: Annotate Content
 prev_section: ces_components
 next_section: dynamic_gazetteer
 category: HowTo's
