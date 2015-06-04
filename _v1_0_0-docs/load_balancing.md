@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Annotation Load Balancing
+title: Annotation Load Balancing Explained
 prev_section: dictionary_reload
 next_section: troubleshooting
 category: HowTo's
