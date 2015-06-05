@@ -1,31 +1,32 @@
 ---
 layout: news_item
-title: ""
+title: "CES Cluster with Dynamic dictionary updates"
 date: "21 Oct 2014"
 author: stefan-enev
 version: 1.0.0
 categories: [release]
 ---
+## CES Cluster with Dynamic dictionary updates
 
-## HA Cluster
+### HA Cluster
 
 The master/slave architecture of the cluster allows it to scale horizontally by introducing more workers and also ensures availability. We call the master 'Coordinator' and the slave nodes 'Workers'.
 
-### Coordinator
+#### Coordinator
 
 * Load balances /extract requests;
 * Load balances dictionary updates;
 * Manages update feeds;
 * Manages worker dictionary queries.
 
-### Worker
+#### Worker
 * Keeps track of its dictionaries fingerprint;
 * Creates a pool of pipelines;
 * Serves extraction requests;
 * Ability to update it's Gazetteer and Metadata PR SPARQL queries;
 * Ability to reload the whole pipeline dictionary.
 
-## Dynamic updates
+#### Dynamic updates
 
 * Multiple retries on failed update, full dictionary reload is triggered after a limit is hit (configurable);
 * EUF plug-in keeps track of updated entities and serves changelists through special SPARQL queries;
