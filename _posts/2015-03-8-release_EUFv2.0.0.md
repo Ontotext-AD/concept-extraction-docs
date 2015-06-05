@@ -11,7 +11,7 @@ categories: [release]
 
 ## Breaking changes
 
-Instead of using Java serialization to fully serialize all updates since the beginning of time in each transaction we now do the following:
+Instead of using Java serialisation to fully serialise all updates since the beginning of time, in each transaction we now do the following:
 
 * Append an entry at the end of the data file;
 * The entry looks like this - short (magic number marker) - int (updated subjects count) - long (fingerprint) - longs (updated subjects).

@@ -10,4 +10,4 @@ categories: [release]
 
 ### Maintenance release providing a bug fix for:
 
-* [FT-480](https://jira.ontotext.com/browse/FT-480) Pipeline fails to start after CES Worker node dies unexpectedly
+* [FT-480](https://jira.ontotext.com/browse/FT-480) Pipeline fails to start after CES Worker node dies unexpectedly.

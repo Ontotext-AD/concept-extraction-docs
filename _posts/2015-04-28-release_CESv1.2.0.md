@@ -17,4 +17,4 @@ categories: [release]
 
 ### Improvements
 
-* [FT-529](https://jira.ontotext.com/browse/FT-529) Training API should use sigmoid perceptron as training algorithm
+* [FT-529](https://jira.ontotext.com/browse/FT-529) The training API should use sigmoid perceptron as a training algorithm.

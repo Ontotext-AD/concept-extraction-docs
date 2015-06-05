@@ -23,11 +23,11 @@ The master/slave architecture of the cluster allows it to scale horizontally by 
 * Keeps track of its dictionaries fingerprint;
 * Creates a pool of pipelines;
 * Serves extraction requests;
-* Ability to update it's Gazetteer and Metadata PR SPARQL queries;
+* Ability to update its Gazetteer and Metadata PR SPARQL queries;
 * Ability to reload the whole pipeline dictionary.
 
 #### Dynamic updates
 
-* Multiple retries on failed update, full dictionary reload is triggered after a limit is hit (configurable);
-* EUF plug-in keeps track of updated entities and serves changelists through special SPARQL queries;
-* Updates are kept track of via GraphDB's fingerprints.
+* Multiple retries on failed update, full dictionary reload is triggered after a limit is  reached (configurable);
+* The EUF plug-in keeps track of updated entities and serves changelists through special SPARQL queries;
+* Keeping track of updates via GraphDB's fingerprints.
