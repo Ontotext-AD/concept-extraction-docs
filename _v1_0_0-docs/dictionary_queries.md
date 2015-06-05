@@ -24,7 +24,7 @@ SELECT ?concept ?type ?literal { ... }
 
 ## Query consistency in the cluster
 
-If the workers of one annotation cluster have different queries, the coordinator will generally not attempt to amend the situation, because it does not know which queries are the correct ones. Instead, the coordinator provides an API call to check the query [consistency status](#statusQueries) and another call to [set queries](#setQueries) on all workers.
+If the workers of one annotation cluster have different queries, the coordinator will generally not attempt to amend the situation as it does not know which are the correct queries. Instead, the coordinator provides an API call to check the query [consistency status](#statusQueries) and another call to [set queries](#setQueries) on all workers.
 
 ## API reference
 
@@ -47,7 +47,7 @@ If the workers of one annotation cluster have different queries, the coordinator
 ### `POST /dictionaries/queries` <a id="setQueries"/>
 
 <div class="info-badge">
-Sets the cluster queries. The specified queries will be set immediately on all active workers. On currently inactive workers the queries will be set when they become available. Resources that do not exist on a worker will be ignored by this worker. If setting the queries on a worker fails, it will not be reattempted.</div>
+Sets the cluster queries. The specified queries will be set immediately on all active workers. On currently inactive workers, the queries will be set when they become available. Resources that do not exist on a worker will be ignored by this worker. If setting the queries on a worker fails, it will not be reattempted.</div>
 
 * *Query params*: none;
 * *Request body*: a JSON map where the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource;
