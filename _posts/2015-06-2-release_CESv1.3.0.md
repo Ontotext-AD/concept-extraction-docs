@@ -23,4 +23,4 @@ This release is focused around the support for 2 (or more) independent coordinat
 
 ### Bug fixes
 
-* [DSP-813](http://jira.ontotext.com/browse/DSP-813): a compression fix in coordinator-worker communication.
+* [DSP-813](http://jira.ontotext.com/browse/DSP-813): a compression fix in the coordinator-worker communication.
