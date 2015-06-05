@@ -41,7 +41,7 @@ If the workers of one annotation cluster have different queries, the coordinator
 <div class="info-badge">Returns the queries, if any, set on the coordinator as cluster queries.</div>
 
 * *Query params*: none;
-* *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call (the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource);
+* *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call; the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource;
 * *Status code*: 200 on success.
 
 ### `POST /dictionaries/queries` <a id="setQueries"/>
@@ -63,7 +63,7 @@ Sets a worker queries as cluster ones. It behaves as <code>POST /dictionaries/qu
 * *Response*: empty;
 * *Status code*:
   * 200 on success;
-  * 400, if the worker does not exist.
+  * 400 if the worker does not exist.
 
 
 ### `DELETE /dictionaries/queries` <a id="deleteQueries"/>

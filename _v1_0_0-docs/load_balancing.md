@@ -11,7 +11,7 @@ permalink: v1_0_0-docs/load_balancing/
 
 The most important characteristic of a worker with respect to annotation load balancing is its capacity. This is a number, specifying how many simultaneous annotation requests the worker can handle. This number is configured once on the worker and then on every coordinator that knows about this worker.
 
-* On-the-worker capacity - set through the `-Dpipeline-pool-max-size` property, as described in the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">Worker configuration section</a>.
+* On-the-worker capacity - set through the `-Dpipeline-pool-max-size` property, as described in the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components#worker_config">Worker configuration section</a>.
 Its value is the actual number of the maximum simultaneous annotations the worker can handle at any given time. Any pending requests while the worker is at full capacity are enqueued and will be handled as soon as the thread(s) in the pipeline pool are released by the currently running annotation job(s).
 
 * On-the-coordinator capacity for a worker - usually set when adding the worker to the coordinator (and can be updated later) by the `capacity` worker property.
@@ -24,7 +24,7 @@ Content-type: application/json
     "capacity": 3
 }]</code></pre>
 
-The `capacity` worker property defines how many simultaneous requests this coordinator will try to enqueue on the worker. If this number is greater than the actual worker capacity, the coordinator will send more annotation requests than the worker can handle, and they will have to wait until the running ones finish. If the number is less than the actual worker capacity, it guarantees that the worker will have free annotation slots. This is useful when there are two (or more) coordinators in use. As the coordinators do not communicate between themselves, one coordinator cannot know how many annotation requests have been enqueued by the other coordinators. Therefore, having some spare annotation slots on the worker ensures that the workers are not overloaded.
+The `capacity` worker property defines how many simultaneous requests this coordinator tries to enqueue on the worker. If this number is greater than the actual worker capacity, the coordinator sends more annotation requests than the worker can handle, and they have to wait until the running ones finish. If the number is less than the actual worker capacity, it guarantees that the worker has free annotation slots. This is useful when there are two (or more) coordinators in use. As the coordinators do not communicate between themselves, one coordinator cannot know how many annotation requests have been enqueued by the other coordinators. Therefore, having some spare annotation slots on the worker ensures that the workers are not overloaded.
 
 ## Load balancing under the hood
 
@@ -38,7 +38,7 @@ head |W2|W1|W2|W1|W2|W1|W2| tail
 These are on-the-coordinator capacities, as the actual workers' capacity is not important for the load balancer.
 </div>
 
-Each square represents a free annotation slot on the respective worker. When an annotation request arrives at the coordinator, it picks the annotation slot at the head, `W2` in this case, and forwards the request to it. After the worker finishes annotating, the slot is pushed back at the tail of the queue (assuming no other requests have arrived in the meantime):
+Each square represents a free annotation slot on the respective worker. When an annotation request arrives at the coordinator, it picks the annotation slot at the head, `W2` in this case, and forwards the request to it. After the worker finishes annotating, the slot is pushed back to the tail of the queue (assuming no other requests have arrived in the meantime):
 
 <pre><code>     +--+--+--+--+--+--+--+
 head |W1|W2|W1|W2|W1|W2|W2| tail

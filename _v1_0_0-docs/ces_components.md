@@ -11,7 +11,7 @@ permalink: v1_0_0-docs/ces_components/
 
 This section provides information about all components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only need to extract named entities from text with a static dictionary and are not interested in high availability, you can do it with a single worker.
 
-## Worker
+## Worker <a id="worker_config"/>
 
 ### Configuration
 

@@ -19,7 +19,7 @@ Gazetteers are text processing resources, optimised to quickly look up words aga
 
 ## Update propagation
 
-When the coordinator sees an update to GraphDB (by observing new fingerprints) it first picks a single random worker and tries to update it to verify that the update can be applied. If the worker fails, another one is picked at random to verify the update. This process is repeated until a worker suceeds or the `-Dcoordinator.updates.maxWorkersToVerify` workers fail. If the workers fail, the update is discarded and is not attempted again. If the verification passes, all remaining workers are requested to update simultaneously.
+When the coordinator sees an update to GraphDB (by observing new fingerprints), it first picks a single random worker and tries to update it to verify that the update can be applied. If the worker fails, another one is picked at random to verify the update. This process is repeated until a worker suceeds or the `-Dcoordinator.updates.maxWorkersToVerify` workers fail. If the workers fail, the update is discarded and is not attempted again. If the verification passes, all remaining workers are requested to update simultaneously.
 
 <img src="{{ site.baseurl }}/img/FT_Dictionary_Updates.png" alt="Dictionary Updates" style="width:800px;height:350px">
 
