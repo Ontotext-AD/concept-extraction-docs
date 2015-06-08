@@ -15,7 +15,7 @@ categories: [release]
 ### Moved/deleted
 
 * Generic-document-schema moved to <a href="https://github.com/Ontotext-AD/commons-pub">commons-pub</a>;
-* Deleted extractor-tag.
+* `extractor-tag` deleted.
 
 ### Improvements
 
@@ -23,7 +23,7 @@ categories: [release]
   * Updated Tomcat module (our own) with rolling, limited logs <a href="https://jira.ontotext.com/browse/DSP-485">DSP-485</a>;
   * Manifests for the internally hosted tagging service backend.
 * Build infrastructure:
-  * Updated root pom to <a href="http://maven.ontotext.com/service/local/repositories/internal/content/com/ontotext/parents/root/4.0.1/root-4.0.1.pom">4.0.1</a>.
+  * Updated `root` POM to <a href="http://maven.ontotext.com/service/local/repositories/internal/content/com/ontotext/parents/root/4.0.1/root-4.0.1.pom">4.0.1</a>.
 * Codebase:
-  * Trimming for ping document so it is logged on a single line instead of 2;
-  * Fixed Coordinator forwarding bug for GET requests.
+  * Trimming for ping document so it is logged on a single line instead of two;
+  * Fixed Coordinator forwarding bug for `GET` requests.

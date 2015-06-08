@@ -13,14 +13,14 @@ This release is focused around the support for 2 (or more) independent coordinat
 
 ### New features
 
-* [FT-516](http://jira.ontotext.com/browse/FT-516): a coordinator call to set dictionary queries on all workers;
-* [FT-526](http://jira.ontotext.com/browse/FT-526): support for two (or more) independent coordinators;
-* [FT-549](http://jira.ontotext.com/browse/FT-549): ability to enable and disable checks for models.
+* [FT-516](http://jira.ontotext.com/browse/FT-516): A coordinator call to set dictionary queries on all workers;
+* [FT-526](http://jira.ontotext.com/browse/FT-526): Support for two (or more) independent coordinators;
+* [FT-549](http://jira.ontotext.com/browse/FT-549): Ability to enable and disable checks for models.
 
 ### Improvements
 
-* [DSP-750](http://jira.ontotext.com/browse/DSP-750): root pom update.
+* [DSP-750](http://jira.ontotext.com/browse/DSP-750): `root` POM update.
 
 ### Bug fixes
 
-* [DSP-813](http://jira.ontotext.com/browse/DSP-813): a compression fix in the coordinator-worker communication.
+* [DSP-813](http://jira.ontotext.com/browse/DSP-813): A compression fix in the coordinator-worker communication.

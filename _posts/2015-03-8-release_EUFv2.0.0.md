@@ -14,7 +14,7 @@ categories: [release]
 Instead of using Java serialisation to fully serialise all updates from the beginning, in each transaction we now do the following:
 
 * Append an entry at the end of the data file;
-* The entry looks like this - short (magic number marker) - int (updated subjects count) - long (fingerprint) - longs (updated subjects).
+* The entry looks like this - `short` (magic number marker) - `int` (updated subjects count) - `long` (fingerprint) - `longs` (updated subjects).
 
 In case the transaction is aborted, which is rare during normal operation, we delete the plug-in data file and dump the whole history without the changes in the aborted transaction. This can be further optimised in future releases.
 
