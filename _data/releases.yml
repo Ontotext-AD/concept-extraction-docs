@@ -6,6 +6,10 @@ releases:
       - "ces_components"
     "HowTo's":
       - "annotating_content"
+      - "dynamic_gazetteer"
+      - "dictionary_queries"
+      - "dictionary_reload"
+      - "load_balancing"
     "Miscellaneous":
       - "troubleshooting"
       - "faq"
