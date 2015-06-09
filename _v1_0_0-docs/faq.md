@@ -9,32 +9,45 @@ permalink: v1_0_0-docs/faq/
 
 ## Issue: Intermittent memory leaks in all components when `checkThreadLocalMapForLeaks`.
 
-We've been running our backup process every night which appears to be running ok, but I'm still seeing evidence of intermittent memory leaks in all the components when `checkThreadLocalMapForLeaks`.
+I am running our backup process every night and it appears to be ok, but I am still seeing evidences of intermittent memory leaks in all the components when `checkThreadLocalMapForLeaks`.
 
-The typical message in the log will be:
+The typical message in the log is:
 
 <pre><code>
 Jan 19, 2015 3:01:39 AM org.apache.catalina.loader.WebappClassLoader checkThreadLocalMapForLeaks
-SEVERE: The web application [/extractor-web] created a ThreadLocal with key of type [com.codahale.metrics.ThreadLocalRandom$1] (value [com.codahale.metrics.ThreadLocalRandom$1@6475dc22]) and a value of type [com.codahale.metrics.ThreadLocalRandom] (value [com.codahale.metrics.ThreadLocalRandom@68008a89]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
-with the key types being different based on the component:
-ces-coordinator
-com.ontotext.ces.utils.sparql.SparqlRestTemplateClient$1
-org.openrdf.query.resultio.sparqlxml.SPARQLResultsXMLParser
-ces-worker
-com.sun.xml.bind.v2.ClassFactory$1
-java.util.WeakHashMap
-com.codahale.metrics.ThreadLocalRandom$1
-graphdb
-com.ontotext.trree.plugin.lucene4.IndexHandler.ThreadLocalQueryParser
-com.ontotext.trree.plugin.lucene4.KeepURIsMultiFieldQueryParser
-solr
-com.datastax.driver.core.TypeCodec$StringCodec$1
-org.apache.solr.schema.DateField.ThreadLocalDateFormat
-recommendation
-com.codahale.metrics.ThreadLocalRandom$1
+SEVERE: The web application [/extractor-web] created a ThreadLocal with key of type [com.codahale.metrics.ThreadLocalRandom$1] (value [com.codahale.metrics.ThreadLocalRandom$1@6475dc22]) and a value of type [com.codahale.metrics.ThreadLocalRandom] (value [com.codahale.metrics.ThreadLocalRandom@68008a89]) but failed to remove it when the web application was stopped.
 </code></pre>
 
-Additionally, GraphDB logs the following when running `clearReferencesJdbc`:
+Threads are going to be renewed over time to try to avoid a probable memory leak.
+
+The key types are different based on the component:
+
+ces-coordinator
+
+* com.ontotext.ces.utils.sparql.SparqlRestTemplateClient$1
+* org.openrdf.query.resultio.sparqlxml.SPARQLResultsXMLParser
+
+ces-worker
+
+* com.sun.xml.bind.v2.ClassFactory$1
+* java.util.WeakHashMap
+* com.codahale.metrics.ThreadLocalRandom$1
+
+graphdb
+
+* com.ontotext.trree.plugin.lucene4.IndexHandler.ThreadLocalQueryParser
+com.ontotext.trree.plugin.lucene4.KeepURIsMultiFieldQueryParser
+
+solr
+
+* com.datastax.driver.core.TypeCodec$StringCodec$1
+* org.apache.solr.schema.DateField.ThreadLocalDateFormat
+
+recommendation
+
+* com.codahale.metrics.ThreadLocalRandom$1
+
+Additionally, when running `clearReferencesJdbc`, GraphDB logs the following :
 
 The web application `/graphdb-workbench-se` registered the JDBC driver `org.h2.Driver` but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
 The web application `/graphdb-workbench-se` appears to have started a thread named `UnusedConnectionsCollector` but has failed to stop it. This is very likely to create a memory leak.
