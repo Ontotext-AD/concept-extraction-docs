@@ -15,8 +15,8 @@ This section provides information about all components required to build a resil
 
 ## Worker <a id="worker_config"/>
 
-<a name="worker-configuration"></a>
-### Configuration
+
+### Configuration <a id="worker-configuration"/>
 
 #### General
 
@@ -46,8 +46,8 @@ This section provides information about all components required to build a resil
 
 ## Coordinator
 
-<a name="coordinator-configuration"></a>
-### Configuration
+
+### Configuration <a id="coordinator-configuration"/>
 
 <div class="note-badge">
 All timeouts are in milliseconds unless specified otherwise.
@@ -116,15 +116,15 @@ All files relative to `~/.coordinator/\[$\{coordinator.name\}\]/`, which is `~/.
 * Compiler: `-XX:+TieredCompilation`;
 * `-Xmx:` depends on the pipeline in use. Each pipeline should come with memory requirements.
 
-<a name="GraphDBandEUFplugin"></a>
-## GraphDB and EUF plug-in
+
+## GraphDB and EUF plug-in <a id="GraphDBandEUFplugin"/>
 
 This is the semantic database required to enable the dynamic dictionary updates functionality. If you do not have GraphDB, you can get the latest version [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). For information how to install, etc., see its [ documentation](http://graphdb.ontotext.com/display/GraphDB62/Home).
 
 The EUF plug-in publishes entity update feeds that are used by the coordinator.
 
-<a name="EUF-configuration"></a>
-### Configuration
+
+### Configuration <a id="EUF-configuration"/>
 
 To install the EUF plug-in in GraphDB:
 
