@@ -16,13 +16,13 @@ Gazetteers are text processing resources, optimised to quickly look up words aga
 3. The coordinator checks the EUF current fingerprint periodically. When the fingerprint changes, the coordinators notify the workers to update to the new fingerprint.
 4. A worker receives a request to update the gazetteer with the new fingerprint. Then it executes the usual queries that the gazetteer uses to retrieve its data, embellished with a special clause for the EUF plugin. This restricts the query result to only the data modified after the current worker fingerprint. Finally, the worker receives its new fingerprint from the coordinator and it is up to date.
 
-<img src="{{ site.baseurl }}/img/Dictionary_Update_Sequence.png" alt="Dictionary_Update_Sequence" style="width:800px;height:350px; overflow: 0 auto">
+<img src="{{ site.baseurl }}/img/Dictionary_Update_Sequence.png" alt="Dictionary_Update_Sequence" style="width:800px;height:350px; margin: 0 auto">
 
 ## Update propagation
 
 When the coordinator sees an update to GraphDB (by observing new fingerprints), it first picks a single random worker and tries to update it to verify that the update can be applied. If the worker fails, another one is picked at random to verify the update. This process is repeated until a worker suceeds or the `-Dcoordinator.updates.maxWorkersToVerify` workers fail. If the workers fail, the update is discarded and is not attempted again. If the verification passes, all remaining workers are requested to update simultaneously.
 
-<img src="{{ site.baseurl }}/img/Cluster Update Propagation Activity.png" alt="Cluster Update Propagation Activity.png" style="width:700px;height:550px; overflow: 0 auto">
+<img src="{{ site.baseurl }}/img/Cluster Update Propagation Activity.png" alt="Cluster Update Propagation Activity.png" style="width:700px;height:550px; margin: 0 auto">
 
 ## Consistency
 
