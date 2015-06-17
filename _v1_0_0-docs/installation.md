@@ -53,9 +53,9 @@ In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_0_
 
 In this example, Apache Tomcat is used as a web application container.
 
-1. Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.
-
-2. Add the coordinator-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:
+<ol>
+<li>Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.</li>
+<li>Add the coordinator-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:</li>
 
 <pre><code>
 coordinator setenv.sh
@@ -73,9 +73,9 @@ export JVM_OPTS="-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx1g"
 export CATALINA_OPTS="$GENERAL_OPTS $ENDPOINT_OPTS $JVM_OPTS"
 </code></pre>
 
-3. Deploy the Coordinator web application in Tomcat's `webapps` directory.
-
-4. (Re-)start the Tomcat instance.
+<li>Deploy the Coordinator web application in Tomcat's `webapps` directory.</li>
+<li>(Re-)start the Tomcat instance.</li>
+</ol>
 
 <div class="info-badge">
 For more information about all Coordinator's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
@@ -85,9 +85,9 @@ For more information about all Coordinator's configuration parameters, see <a hr
 
 In this example, Apache Tomcat is used as a web application container.
 
-1. Download the [CES Worker web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war) from our Nexus instance.
-
-2. Add the worker-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:
+<ol>
+<li>Download the [CES Worker web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war) from our Nexus instance.</li>
+<li>Add the worker-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:</li>
 
 <pre><code>
 worker setenv.sh
@@ -102,9 +102,9 @@ export W_OPTS="-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipelin
 export CATALINA_OPTS="$J_OPTS $W_OPTS"
 </code></pre>
 
-3. Deploy the `extractor-web.war` in Tomcat's `webapps` directory.
-
-4. (Re-)start the Tomcat instance.
+<li>Deploy the `extractor-web.war` in Tomcat's `webapps` directory.</li>
+<li>(Re-)start the Tomcat instance.</li>
+</ol>
 
 <div class="info-badge">
 For more information about all Worker's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
