@@ -55,7 +55,7 @@ In this example, Apache Tomcat is used as a web application container.
 
 <ol>
 <li>Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.</li>
-<li>Add the coordinator-specific parameters to the Tomcat setup. Use the <pre><tomcat-home>/bin/setenv.sh</pre> file. For example:</li>
+<li>Add the coordinator-specific parameters to the Tomcat setup. Use the <code><tomcat-home>/bin/setenv.sh</code> file. For example:</li>
 
 <pre><code>
 coordinator setenv.sh
