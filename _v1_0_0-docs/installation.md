@@ -116,8 +116,8 @@ For more information about all Worker's configuration parameters, see <a href="{
 Assumptions:
 
 <ul>
-<li> the coordinator instance is located at http://coordinator.url:7070/coordinator;</li>
-<li> the worker instance is located at http://worker.url:6060/worker;</li>
+<li> the coordinator instance is located at <code>http://coordinator.url:7070/coordinator</code>;</li>
+<li> the worker instance is located at <code>http://worker.url:6060/worker</code>;</li>
 <li> the worker instance has a pipeline pool with size 2.</li>
 </ul>
 </div>
@@ -135,5 +135,5 @@ Content-type: application/json
 * <code>url</code> is the location of the worker instance.
 
 <div class="note-badge">
-Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at http://coordinator.url:7070/coordinator/apidocs and the specific <code>POST</code> and <code>PUT</code> requests.
+Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at <code>http://coordinator.url:7070/coordinator/apidocs</code> and the specific <code>POST</code> and <code>PUT</code> requests.
 </div>
