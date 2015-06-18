@@ -54,9 +54,8 @@ In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_0_
 In this example, Apache Tomcat is used as a web application container.
 
 <ol>
-<li>Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.</li>
+<li>Download the <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war">Coordinator web application</a> from our Nexus instance.</li>
 <li>Add the coordinator-specific parameters to the Tomcat setup. Use the <code>TOMCAT_HOME/bin/setenv.sh</code> file. For example:</li>
-
 <pre><code>
 coordinator setenv.sh
 
@@ -86,7 +85,7 @@ For more information about all Coordinator's configuration parameters, see <a hr
 In this example, Apache Tomcat is used as a web application container.
 
 <ol>
-<li>Download the [CES Worker web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war) from our Nexus instance.</li>
+<li>Download the <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war">CES Worker web application</a> from our Nexus instance.</li>
 <li>Add the worker-specific parameters to the Tomcat setup. Use the <code>TOMCAT_HOME/bin/setenv.sh</code> file. For example:</li>
 
 <pre><code>
