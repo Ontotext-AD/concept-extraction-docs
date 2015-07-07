@@ -4,7 +4,7 @@ title: Annotate Content
 prev_section: ces_components
 next_section: dynamic_gazetteer
 category: HowTo's
-permalink: v1_0_0-docs/annotating_content/
+permalink: v1_3_1-docs/annotating_content/
 ---
 
 ## Introduction
@@ -53,6 +53,19 @@ Annotation requests go to `http://worker-base/extract`. There are two ways to in
 It is also advisable to specify <code>Accept</code> header with the desired output mime type. Usually the default is <code>application/vnd.ontotext.ces+json</code>. For more details, see Supported output formats.
 </div>
 
+### Setting timeout
+
+You can also specify a timeout in ms. This is especially useful in at least three cases:
+* when you want to avoid particularly large documents clogging the system
+* when you want to avoid a document triggering a bug to eat the CPU
+* when you want to ensure you either get results within a specific time frame or fail fast
+
+Extending the previous `GET` example, you can say you want the actual annotation process to take no longer than 2 seconds like this: `http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel&timeout=2000`
+
+<div class="info-badge">
+When we showed the [Tagging Service](http://tag.ontotext.com/) to our Sales team for the first time, in 2 minutes they were already trying to annotate a 200 page document. Since it didn't return results immediately, they tried again a few times, until the service was completely clogged. May the right timeout be with you!
+</div>
+
 ## Supported input formats
 
 * the standard web text formats such as text/xml, text/html and text/plain;
@@ -76,11 +89,9 @@ Mention features can vary a lot, depending on the sub-system that generates the 
 * `class` - generally related to the `type` of the mention; the `class` is the class name URI in the concept database;
 * `string` - а piece of text associated with this mention (its label); the text between the  `startOffset` and `endOffset`;
 * `id` - the numeric ID of the mention, which is unique for the document;
-*	`isTrusted` – a Boolean feature denoting whether the concept instance is present in the knowledge base;
-*	`confidence` - the statistic probability output of the machine learning classifiers;
-*	`relevance` - term frequency, weighted with offset from document beginning;
-*	`ambiguityRank` – the total number of annotation candidates for this offset range (used by an internal curation tool for disambiguation task complexity scoring);
-*	`ambiguityRankWithinClass` – the total number of annotation candidates with the same class as this annotation (used by an internal curation tool for disambiguation task complexity scoring).
+* `isTrusted` – a Boolean feature denoting whether the concept instance is present in the knowledge base;
+* `confidence` - the statistic probability output of the machine learning classifiers;
+* `relevance` - term frequency, weighted with offset from document beginning;
 
 Mentions can have other features that are database and type dependent. For example, locations can also have a `featClass`, `featCode`, `countryCode`, etc., which provide more information about the concept.
 

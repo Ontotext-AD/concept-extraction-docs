@@ -8,9 +8,5 @@ author: Ontotext
 ASSET_PATH : assets/boddhi
 
 collections:
-  v1_0_0-docs:
-    output: true
-  v1_1_1-docs:
-    output: true
-  v1_1_0-docs:
+  v1_3_1-docs:
     output: true

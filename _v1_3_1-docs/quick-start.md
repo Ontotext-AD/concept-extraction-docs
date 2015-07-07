@@ -4,7 +4,7 @@ layout: default
 prev_section:
 next_section: installation
 category: Getting Started
-permalink: v1_0_0-docs/quick-start/
+permalink: v1_3_1-docs/quick-start/
 ---
 
 ## 0. Minimum system requirements
@@ -25,14 +25,9 @@ At the moment, we do not offer evaluation licenses and trials. If you want to ev
 
 ## 2. Install
 
-Check out the <a href="{{ site.baseurl }}/v1_0_0-docs/installation">Installation</a> page.
+Check out the <a href="{{ site.baseurl }}/v1_3_1-docs/installation">Installation</a> page.
 
-## 3. Annotate Content
+## 3. Play
 
-See the <a href="{{ site.baseurl }}/v1_0_0-docs/annotating_content">Annotating Content</a> page.
-
-## 4.
-
-## 5. Take a break
-
-Now that you have setup the concept extraction components successfully, you deserve a break... Find out how in the HowTo section.
+Now that you have setup the concept extraction components successfully, you can start playing with the service. Check out the <a href="{{ site.baseurl }}/v1_3_1-docs/annotating_content">Annotating Content</a> page to
+ start annotating.

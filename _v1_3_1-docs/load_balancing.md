@@ -4,14 +4,14 @@ title: Annotation Load Balancing Explained
 prev_section: dictionary_reload
 next_section: troubleshooting
 category: HowTo's
-permalink: v1_0_0-docs/load_balancing/
+permalink: v1_3_1-docs/load_balancing/
 ---
 
 ## Worker capacity
 
 The most important characteristic of a worker with respect to annotation load balancing is its capacity. This is a number, specifying how many simultaneous annotation requests the worker can handle. This number is configured once on the worker and then on every coordinator that knows about this worker.
 
-* On-the-worker capacity - set through the `-Dpipeline-pool-max-size` property, as described in the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components#worker_config">Worker configuration section</a>.
+* On-the-worker capacity - set through the `-Dpipeline-pool-max-size` property, as described in the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">Worker configuration section</a>.
 Its value is the actual number of the maximum simultaneous annotations the worker can handle at any given time. Any pending requests while the worker is at full capacity are enqueued and will be handled as soon as the thread(s) in the pipeline pool are released by the currently running annotation job(s).
 
 * On-the-coordinator capacity for a worker - usually set when adding the worker to the coordinator (and can be updated later) by the `capacity` worker property.
