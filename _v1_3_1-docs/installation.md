@@ -4,7 +4,7 @@ layout: default
 prev_section: quick-start
 next_section: ces_components
 category: Getting Started
-permalink: v1_0_0-docs/installation/
+permalink: v1_3_1-docs/installation/
 ---
 ## General prerequisites
 
@@ -16,7 +16,7 @@ permalink: v1_0_0-docs/installation/
 
 1. Unzip the content of your GATE pipeline in a directory (for the purpose of this guide - `/home/user/pipeline`).
 2. Install a web application container. If you do not have one, you can use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi).
-3. Set a few JVM parameters. In Tomcat, this is done from `/apache-tomcat/bin/setenv.sh`. See the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">worker configuration</a> section.
+3. Set a few JVM parameters. In Tomcat, this is done from `/apache-tomcat/bin/setenv.sh`. See the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">worker configuration</a> section.
 4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war).
 5. Start your `webapp` container.
 6. Deploy the `war` you have just downloaded. In Tomcat, move it to its `/webapps` sub-directory where it will be picked up.
@@ -24,7 +24,7 @@ permalink: v1_0_0-docs/installation/
 
 <div class="note-badge">
 
-Due to the <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitations, the most important endpoint, namely <code>extract</code>, cannot have a live documentation. Therefore, it is explained <a href="{{ site.baseurl }}/v1_0_0-docs/annotating_content">here</a>.
+Due to the <a href="https://helloreverb.com/developers/swagger">Swagger</a> limitations, the most important endpoint, namely <code>extract</code>, cannot have a live documentation. Therefore, it is explained <a href="{{ site.baseurl }}/v1_3_1-docs/annotating_content">here</a>.
 </div>
 
 
@@ -42,7 +42,7 @@ The high-availability setup architecture includes several components, which comm
 
 Go to the official [GraphDB documentation](http://graphdb.ontotext.com/display/GraphDB6/Home) to learn how to install and use the GraphDB semantic database.
 
-In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">CES Components section</a>.
+In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">CES Components section</a>.
 
 <div class="note-badge">
 
@@ -78,7 +78,7 @@ export CATALINA_OPTS="$GENERAL_OPTS $ENDPOINT_OPTS $JVM_OPTS"
 4. (Re-)start the Tomcat instance.
 
 <div class="info-badge">
-For more information about all Coordinator's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
+For more information about all Coordinator's configuration parameters, see <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">here</a>.
 </div>
 
 ### Setting up a Worker node
@@ -107,7 +107,7 @@ export CATALINA_OPTS="$J_OPTS $W_OPTS"
 4. (Re-)start the Tomcat instance.
 
 <div class="info-badge">
-For more information about all Worker's configuration parameters, see <a href="{{ site.baseurl }}/v1_0_0-docs/ces_components">here</a>.
+For more information about all Worker's configuration parameters, see <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">here</a>.
 </div>
 
 ### Adding a Worker node to the Coordinator

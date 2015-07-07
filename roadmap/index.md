@@ -8,7 +8,5 @@ In an effort to be transparent with our roadmap, we publish in advance the impor
 
 ## Upcoming changes
 
-### 2015
-
-
-#### ”Why am I seeing this?”
+We don't have any upcoming plans really, since this is the enabling infrastructure and it's doing it's job really well. We are rather focusing on improving our
+core concept extraction technology which powers our [Tagging service](http://tag.ontotext.com/).

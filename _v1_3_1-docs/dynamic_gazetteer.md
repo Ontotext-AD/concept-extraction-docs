@@ -4,7 +4,7 @@ title: Dynamic Gazetteer Explained
 prev_section: annotating_content
 next_section: dictionary_queries
 category: HowTo's
-permalink: v1_0_0-docs/dynamic_gazetteer/
+permalink: v1_3_1-docs/dynamic_gazetteer/
 ---
 
 Gazetteers are text processing resources, optimized to quickly look up words against very large set of labels. They fill their dictionaries (data set) via a SPARQL endpoint, usually from GraphDB. Ideally, a gazetteer should reflect the changes in its source knowledge base. However, loading entire large datasets from GraphDB can take a couple of hours. Ontotext's Dynamic Linked Data Gazetteer is able to update incrementally, efficiently keeping up with the data. It also has an additional metadata component, which is responsible for adding more entity features to the candidate annotation and is also kept in sync.

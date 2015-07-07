@@ -4,13 +4,13 @@ title: Reload dictionaries
 prev_section: dictionary_queries
 next_section: load_balancing
 category: HowTo's
-permalink: v1_0_0-docs/dictionary_reload/
+permalink: v1_3_1-docs/dictionary_reload/
 ---
 
 Reloading a worker's dictionary means clearing it and executing a number of SPARQL queries to fill it afresh from a given SPARQL endpoint. It is potentially very long operation and should only be needed in few cases:
 
 * when a worker is brand new;
-* when the database model has changed drastically, in which case queries should be updated before reloading (see <a href="{{ site.baseurl }}/v1_0_0-docs/dictionary_queries">Manage Dictionary Queries</a>);
+* when the database model has changed drastically, in which case queries should be updated before reloading (see <a href="{{ site.baseurl }}/v1_3_1-docs/dictionary_queries">Manage Dictionary Queries</a>);
 * when gazetteer caches have become corrupted on a worker (i.e. caused by disk failure);
 * when a worker is too far behind the data in the database for incremental updates to be practical.
 

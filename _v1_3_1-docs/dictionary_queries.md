@@ -4,7 +4,7 @@ title: Manage Dictionary Queries
 prev_section: dynamic_gazetteer
 next_section: dictionary_reload
 category: HowTo's
-permalink: v1_0_0-docs/dictionary_queries/
+permalink: v1_3_1-docs/dictionary_queries/
 ---
 
 The gazetteer and metadata components use a GraphDB SPARQL endpoint to retrieve entities. What is retrieved is configured by setting a number of SPARQL queries for each component.
