@@ -8,5 +8,5 @@ In an effort to be transparent with our roadmap, we are publishing in advance th
 
 ## Upcoming changes
 
-We don't have any upcoming plans really, since this is the enabling infrastructure and it's doing it's job really well. We are rather focusing on improving our
+We don't have any upcoming plans really, since this is the enabling infrastructure and it's doing its job really well. We are rather focused on improving our
 core concept extraction technology which powers our [Tagging service](http://tag.ontotext.com/).
