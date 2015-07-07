@@ -24,7 +24,7 @@ SELECT ?concept ?type ?literal { ... }
 
 ## Query consistency in the cluster
 
-If the workers of one annotation cluster have different queries, the coordinator will generally not attempt to amend the situation, because it does not know which queries are the correct ones. Instead, the coordinator provides an API call to check the query [consistency status](#statusQueries) and another call to [set queries](#setQueries) on all workers.
+If the workers of one annotation cluster have different queries, the coordinator will generally not attempt to amend the situation as it does not know which are the correct queries. Instead, the coordinator provides an API call to check the query [consistency status](#statusQueries) and another call to [set queries](#setQueries) on all workers.
 
 ## API reference
 
@@ -41,13 +41,13 @@ If the workers of one annotation cluster have different queries, the coordinator
 <div class="info-badge">Returns the queries, if any, set on the coordinator as cluster queries.</div>
 
 * *Query params*: none;
-* *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call (the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource);
+* *Response*: a JSON map mirroring what was set by the `POST /dictionaries/queries` call; the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource;
 * *Status code*: 200 on success.
 
 ### `POST /dictionaries/queries` <a id="setQueries"/>
 
 <div class="info-badge">
-Sets the cluster queries. The specified queries will be set immediately on all active workers. On currently inactive workers the queries will be set when they become available. Resources that do not exist on a worker will be ignored by this worker. If setting the queries on a worker fails, it will not be reattempted.</div>
+Sets the cluster queries. The specified queries will be set immediately on all active workers. On currently inactive workers, the queries will be set when they become available. Resources that do not exist on a worker will be ignored by this worker. If setting the queries on a worker fails, it will not be reattempted.</div>
 
 * *Query params*: none;
 * *Request body*: a JSON map where the keys in the map are pipeline resource names (gazetteer/metadata), the values are the respective queries for each resource;
@@ -63,7 +63,7 @@ Sets a worker queries as cluster ones. It behaves as <code>POST /dictionaries/qu
 * *Response*: empty;
 * *Status code*:
   * 200 on success;
-  * 400, if the worker does not exist.
+  * 400 if the worker does not exist.
 
 
 ### `DELETE /dictionaries/queries` <a id="deleteQueries"/>

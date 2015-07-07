@@ -9,11 +9,14 @@ permalink: v1_3_1-docs/ces_components/
 
 ## Overview
 
+
 This section provides information about all components required to build a resilient Concept Extraction API with dynamically updated Gazetteer dictionaries. If you only need to extract named entities from text with a static dictionary and are not interested in high availability, you can do it with a single worker.
 
-## Worker
 
-### Configuration
+## Worker <a id="worker_config"/>
+
+
+### Configuration <a id="worker-configuration"/>
 
 #### General
 
@@ -24,9 +27,11 @@ This section provides information about all components required to build a resil
 * `-Dgate.app.location` (required) - a full path to the `*.xgapp` file that will be loaded, including the filename and extension. It has to start with `file:/`, otherwise it is interpreted as relative to the application context.
 * `-Dpipeline-pool-max-size` (optional, default = 1) - the maximum number of GATE pooled applications. It shows the number of simultaneous annotations this worker supports.
 
+
 #### Recommended JVM settings
 
 * GC:
+
    * `-XX:+UseConcMarkSweepGC -verbose:gc-verbose:sizes`;
    * `-Xloggc:/path/to/logs/gc.log`;
    * `-XX:+PrintGCDetails`;
@@ -41,7 +46,8 @@ This section provides information about all components required to build a resil
 
 ## Coordinator
 
-### Configuration
+
+### Configuration <a id="coordinator-configuration"/>
 
 <div class="note-badge">
 All timeouts are in milliseconds unless specified otherwise.
@@ -118,13 +124,15 @@ All files relative to `~/.coordinator/\[$\{coordinator.name\}\]/`, which is `~/.
 * Compiler: `-XX:+TieredCompilation`
 * `-Xmx:` depends on the pipeline in use. Each pipeline should come with memory requirements.
 
-## GraphDB and EUF plug-in
+
+## GraphDB and EUF plug-in <a id="GraphDBandEUFplugin"/>
 
 This is the semantic database required to enable the dynamic dictionary updates functionality. If you do not have GraphDB, you can get the latest version [here](http://info.ontotext.com/graphdb-lite-eval-graphdb). For information how to install, etc., see its [ documentation](http://graphdb.ontotext.com/display/GraphDB62/Home).
 
 The EUF plug-in publishes entity update feeds that are used by the coordinator.
 
-### Configuration
+
+### Configuration <a id="EUF-configuration"/>
 
 To install the EUF plug-in in GraphDB:
 

@@ -23,6 +23,7 @@ A *mention* is a piece of text with attached metadata features, which is usually
 For example, annotating the text "Hello London" will yield a mention such as the one below. It has a `startOffset` and `endOffset`, and is associated with the concept `http://dbpedia.org/resource/London`.
 
 <pre><code>
+
 {
   "name": "London",
   "startOffset": 9,
@@ -101,6 +102,7 @@ Mentions can have other features that are database and type dependent. For examp
 Request:
 
 <pre><code>
+
 POST /extractor-web/extract
 Content-length: 14
 Content-type: text/plain
@@ -112,8 +114,6 @@ Hello London!
 Response:
 
 <pre><code>
-HTTP/1.1 200 OK
-Content-Type: application/vnd.ontotext.ces+json;charset=UTF-8
 
 {
   "mentions": [{
@@ -136,6 +136,7 @@ Content-Type: application/vnd.ontotext.ces+json;charset=UTF-8
 Request:
 
 <pre><code>
+
 POST /extractor-web/extract
 Content-type: application/vnd.ontotext.ces.document+xml
 Accept: application/vnd.ontotext.ces.document+json
@@ -151,11 +152,10 @@ Accept: application/vnd.ontotext.ces.document+json
 
 </code></pre>
 
+
 Response:
 
 <pre><code>
-HTTP/1.1 200 OK
-Content-Type: application/vnd.ontotext.ces.document+json;charset=UTF-8
 
 {
   "id": "222-222",

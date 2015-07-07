@@ -14,12 +14,12 @@ permalink: v1_3_1-docs/installation/
 
 ## Standard (and easy) setup
 
-1. Unzip the content of your GATE pipeline in a directory (for the purpose of this guide - `/home/user/pipeline`).
+1. Unzip the content of your GATE pipeline in a directory (for the purpose of this guide - <code>/home/user/pipeline</code>).
 2. Install a web application container. If you do not have one, you can use [Apache Tomcat 7](http://tomcat.apache.org/download-70.cgi).
-3. Set a few JVM parameters. In Tomcat, this is done from `/apache-tomcat/bin/setenv.sh`. See the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">worker configuration</a> section.
-4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war).
+3. Set a few JVM parameters. In Tomcat, this is done from <code>/apache-tomcat/bin/setenv.sh</code>. See the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">worker configuration</a> section.
+4. Download [extractor-web.war](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.3.1/extractor-web-1.3.1.war).
 5. Start your `webapp` container.
-6. Deploy the `war` you have just downloaded. In Tomcat, move it to its `/webapps` sub-directory where it will be picked up.
+6. Deploy the `war` you have just downloaded. In Tomcat, move it to its <code>/webapps</code> sub-directory where it will be picked up.
 7. Now go to [http://localhost:8080/extractor-web/apidocs](http://localhost:8080/extractor-web/apidocs) for the live documentation.
 
 <div class="note-badge">
@@ -53,10 +53,9 @@ In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_3_
 
 In this example, Apache Tomcat is used as a web application container.
 
-1. Download the [Coordinator web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war) from our Nexus instance.
-
-2. Add the coordinator-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:
-
+<ol>
+<li>Download the <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/coordinator/1.0.1/coordinator-1.0.1.war">Coordinator web application</a> from our Nexus instance.</li>
+<li>Add the coordinator-specific parameters to the Tomcat setup. Use the <code>TOMCAT_HOME/bin/setenv.sh</code> file. For example:</li>
 <pre><code>
 coordinator setenv.sh
 
@@ -73,9 +72,9 @@ export JVM_OPTS="-XX:+UseConcMarkSweepGC -XX:+TieredCompilation -Xmx1g"
 export CATALINA_OPTS="$GENERAL_OPTS $ENDPOINT_OPTS $JVM_OPTS"
 </code></pre>
 
-3. Deploy the Coordinator web application in Tomcat's `webapps` directory.
-
-4. (Re-)start the Tomcat instance.
+<li>Deploy the Coordinator web application in Tomcat's <code>webapps</code> directory.</li>
+<li>(Re-)start the Tomcat instance.</li>
+</ol>
 
 <div class="info-badge">
 For more information about all Coordinator's configuration parameters, see <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">here</a>.
@@ -85,9 +84,9 @@ For more information about all Coordinator's configuration parameters, see <a hr
 
 In this example, Apache Tomcat is used as a web application container.
 
-1. Download the [CES Worker web application](http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war) from our Nexus instance.
-
-2. Add the worker-specific parameters to the Tomcat setup. Use the `<tomcat-home>/bin/setenv.sh` file. For example:
+<ol>
+<li>Download the <a href="http://maven.ontotext.com/content/repositories/publishing-releases/com/ontotext/ces/extractor-web/1.0.1/extractor-web-1.0.1.war">CES Worker web application</a> from our Nexus instance.</li>
+<li>Add the worker-specific parameters to the Tomcat setup. Use the <code>TOMCAT_HOME/bin/setenv.sh</code> file. For example:</li>
 
 <pre><code>
 worker setenv.sh
@@ -102,9 +101,9 @@ export W_OPTS="-Dworker.name=st-worker -Dgate.app.location=file:/path/to/pipelin
 export CATALINA_OPTS="$J_OPTS $W_OPTS"
 </code></pre>
 
-3. Deploy the `extractor-web.war` in Tomcat's `webapps` directory.
-
-4. (Re-)start the Tomcat instance.
+<li>Deploy the <code>extractor-web.war</code> in Tomcat's <code>webapps</code> directory.</li>
+<li>(Re-)start the Tomcat instance.</li>
+</ol>
 
 <div class="info-badge">
 For more information about all Worker's configuration parameters, see <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">here</a>.
@@ -116,13 +115,13 @@ For more information about all Worker's configuration parameters, see <a href="{
 Assumptions:
 
 <ul>
-<li> the coordinator instance is located at http://coordinator.url:7070/coordinator;</li>
-<li> the worker instance is located at http://worker.url:6060/worker;</li>
+<li> the coordinator instance is located at <code>http://coordinator.url:7070/coordinator</code>;</li>
+<li> the worker instance is located at <code>http://worker.url:6060/worker</code>;</li>
 <li> the worker instance has a pipeline pool with size 2.</li>
 </ul>
 </div>
 
-Using a REST client, execute the following request to the coordinator instance (`http://coordinator.url:7070`):
+Using a REST client, execute the following request to the *coordinator* instance (<code>http://coordinator.url:7070</code>):
 
 <pre><code>
 POST /coordinator/workers
@@ -131,9 +130,9 @@ Content-type: application/json
 [{"capacity":2, "url":"http://worker.url:6060/worker"}]
 </code></pre>
 
-* `capacity` is the number of pipeline instances in the worker pool;
-* `url` is the location of the worker instance.
+* <code>capacity</code> is the number of pipeline instances in the worker pool;
+* <code>url</code> is the location of the worker instance.
 
 <div class="note-badge">
-Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at http://coordinator.url:7070/coordinator/apidocs and the specific <code>POST</code> and <code>PUT</code> requests.
+Instead of a REST client, one could use the Coordinator's Swagger Documentation endpoint, located at <code>http://coordinator.url:7070/coordinator/apidocs</code> and the specific <code>POST</code> and <code>PUT</code> requests.
 </div>
