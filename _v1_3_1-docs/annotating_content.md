@@ -56,6 +56,7 @@ It is also advisable to specify <code>Accept</code> header with the desired outp
 ### Setting timeout
 
 You can also specify a timeout in ms. This is especially useful in at least three cases:
+
 * when you want to avoid particularly large documents clogging the system
 * when you want to avoid a document triggering a bug to eat the CPU
 * when you want to ensure you either get results within a specific time frame or fail fast
