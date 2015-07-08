@@ -64,14 +64,14 @@ You can also specify a timeout in ms. This is especially useful in at least thre
 Extending the previous `GET` example, you can say you want the actual annotation process to take no longer than 2 seconds like this: `http://worker-base/extract?url=http://www.bbc.com/culture/story/20141020-the-plane-that-changed-air-travel&timeout=2000`
 
 <div class="info-badge">
-When we showed the [Tagging Service](http://tag.ontotext.com/) to our Sales team for the first time, in 2 minutes they were already trying to annotate a 200 page document. Since it didn't return results immediately, they tried again a few times, until the service was completely clogged. May the right timeout be with you!
+When we showed the <a href="http://tag.ontotext.com/">Tagging Service</a> to our Sales team for the first time, in 2 minutes they were already trying to annotate a 200 page document. Since it didn't return results immediately, they tried again a few times, until the service was completely clogged. May the right timeout be with you!
 </div>
 
 ## Supported input formats
 
 * the standard web text formats such as text/xml, text/html and text/plain;
 * Ontotext's generic document schema in either JSON (`application/vnd.ontotext.ces.document+json`) or XML (`application/vnd.ontotext.ces.document+xml`) format;
-* formats supported by [Apache Tika](http://tika.apache.org/1.5/formats.html).
+* formats supported by <a href="http://tika.apache.org/1.5/formats.html">Apache Tika</a>.
 
 ## Supported output formats
 
