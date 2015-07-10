@@ -11,7 +11,7 @@ permalink: v1_3_1-docs/quick-start/
 
 JDK requirements:
 
-* Java 7 or later installed.
+* Java 8 or later installed.
 * We use the Oracle's JDK 8 and have not tested with OpenJDK.
 
 Preferred OS:
