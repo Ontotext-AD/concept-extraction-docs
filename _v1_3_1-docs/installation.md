@@ -44,11 +44,6 @@ Go to the official [GraphDB documentation](http://graphdb.ontotext.com/display/G
 
 In order to install the EUF plug-in, check the <a href="{{ site.baseurl }}/v1_3_1-docs/ces_components">CES Components section</a>.
 
-<div class="note-badge">
-
-(optional): To activate the EUF plug-in, insert a single random statement with <code>rdfs:label</code> as predicate.
-</div>
-
 ### Setting up a Coordinator
 
 In this example, Apache Tomcat is used as a web application container.
